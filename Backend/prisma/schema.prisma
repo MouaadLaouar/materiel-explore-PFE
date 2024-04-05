@@ -8,32 +8,34 @@ datasource db {
 }
 
 model User {
-  ID               String             @id @default(uuid())
-  FirstName        String
-  LastName         String
-  Email            String             @unique
-  Password         String
-  Phone            String
-  Role             Role
-  CreatedAt        DateTime           @default(now())
+  ID        String   @id @default(uuid())
+  FirstName String
+  LastName  String
+  Email     String   @unique
+  Password  String
+  Phone     String
+  Role      Role
+  CreatedAt DateTime @default(now())
 
   BorrowedMaterial BorrowedMaterial[]
   Departement      Departement[]
 }
 
 model Material {
-  ID          String   @id @unique
-  Name        String   
+  ID          String      @id @default(cuid())
+  Name        String
   Description String
-  CreatedAt   DateTime @default(now())
+  CreatedAt   DateTime    @default(now())
+  Departement Departement @relation(fields: [DepartementId], references: [ID])
+
+  DepartementId String
 
   BorrowedMaterial BorrowedMaterial[]
-  Departement      Departement[]
-  Picture Picture[]
+  Picture          Picture[]
 }
 
 model BorrowedMaterial {
-  ID        String   @id @unique
+  ID        String   @id @default(cuid())
   User      User     @relation(fields: [userId], references: [ID])
   Material  Material @relation(fields: [MaterialId], references: [ID])
   CreatedAt DateTime @default(now())
@@ -45,20 +47,19 @@ model BorrowedMaterial {
 }
 
 model Departement {
-  ID       String   @id @unique
-  Name     String
-  Admin    User     @relation(fields: [UserId], references: [ID])
-  Email    String   @unique
-  Phone    String
-  Material Material @relation(fields: [MaterialId], references: [ID])
+  ID    String @id @default(cuid())
+  Name  String
+  Admin User   @relation(fields: [UserId], references: [ID])
+  Email String @unique
+  Phone String
 
-  MaterialId String
-  UserId String
+  UserId   String
+  Material Material[]
 }
 
-model Picture  {
-  ID String @id @unique
-  Name String
+model Picture {
+  ID         String   @id @default(cuid())
+  Name       String
   MaterialId Material @relation(fields: [MaterialID], references: [ID])
 
   MaterialID String
