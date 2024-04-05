@@ -14,20 +14,8 @@ export class MaterialDto {
     Departement: string
 }
 
-export class UpdateMaterialDto {
+export class UpdateMaterialDto extends MaterialDto {
     @IsString()
     @IsNotEmpty()
     Id: string
-
-    @IsString()
-    @IsNotEmpty()
-    Name: string
-
-    @IsString()
-    @IsNotEmpty()
-    Description: string
-
-    @IsString()
-    @IsNotEmpty()
-    Departement: string
 }

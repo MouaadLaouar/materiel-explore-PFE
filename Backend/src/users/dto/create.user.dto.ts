@@ -26,3 +26,9 @@ export class CreateUserDto {
     @IsString()
     Role: "USER" | "ADMIN"
 }
+
+export class UpdateUserDto extends CreateUserDto {
+    @IsNotEmpty()
+    @IsString()
+    Id: string;
+}
