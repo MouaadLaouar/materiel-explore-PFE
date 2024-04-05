@@ -1,33 +1,35 @@
-import { Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/Guards/auth.guard';
+import { MaterialService } from './material.service';
+import { MaterialDto, UpdateMaterialDto } from './dto/create.material.dto';
 
 @Controller('materials')
 @UseGuards(AuthGuard)
 export class MaterialController {
-    constructor() {}
+    constructor(private materialService: MaterialService) {}
 
     @Get('')
     GetAll() {
-        return 'Get All';
+        return this.materialService.GetAll();
     }
 
     @Post('')
-    CreateMaterial() {
-        return 'Post Create Material';
+    CreateMaterial(@Body() Data: MaterialDto) {
+        return this.materialService.CreateMaterial(Data);
     }
 
     @Get(':id')
-    GetById(@Param() params: any): string {
-        return `Get By ID => ${params.id}`;
+    GetById(@Param() params: any) {
+        return this.materialService.GetById(params.id);
     }
 
     @Put(':id')
-    UpdateMaterial(@Param() params: any): string {
-        return `Update Material ID => ${params.id}`;
+    UpdateMaterial(@Param() params: any, @Body() Data:UpdateMaterialDto) {
+        return this.materialService.UpdateMaterial(Data);
     }
 
     @Delete(':id')
-    DeleteMaterial(@Param() params: any): string {
-        return ` Delete Material With Id => ${params.id}`
+    DeleteMaterial(@Param() params: any) {
+        return this.materialService.DeleteMaterial(params.id)
     }
 }
