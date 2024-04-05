@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  ID               String             @id @default(uuid())
+  FirstName        String
+  LastName         String
+  Email            String             @unique
+  Password         String
+  Phone            String
+  Role             Role
+  CreatedAt        DateTime           @default(now())
+
+  BorrowedMaterial BorrowedMaterial[]
+  Departement      Departement[]
+}
+
+model Material {
+  ID          String   @id @unique
+  Name        String   
+  Description String
+  CreatedAt   DateTime @default(now())
+
+  BorrowedMaterial BorrowedMaterial[]
+  Departement      Departement[]
+  Picture Picture[]
+}
+
+model BorrowedMaterial {
+  ID        String   @id @unique
+  User      User     @relation(fields: [userId], references: [ID])
+  Material  Material @relation(fields: [MaterialId], references: [ID])
+  CreatedAt DateTime @default(now())
+  Returned  Boolean  @default(false)
+  DueDate   DateTime
+
+  userId     String
+  MaterialId String
+}
+
+model Departement {
+  ID       String   @id @unique
+  Name     String
+  Admin    User     @relation(fields: [UserId], references: [ID])
+  Email    String   @unique
+  Phone    String
+  Material Material @relation(fields: [MaterialId], references: [ID])
+
+  MaterialId String
+  UserId String
+}
+
+model Picture  {
+  ID String @id @unique
+  Name String
+  MaterialId Material @relation(fields: [MaterialID], references: [ID])
+
+  MaterialID String
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
