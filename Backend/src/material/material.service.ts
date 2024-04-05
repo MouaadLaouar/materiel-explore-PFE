@@ -8,7 +8,11 @@ export class MaterialService {
 
     async GetAll() {
         try {
-            return await this.prisma.material.findMany();
+            return await this.prisma.material.findMany({
+                include: {
+                    Picture: true
+                }
+            });
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
                 cause: new Error(error),
