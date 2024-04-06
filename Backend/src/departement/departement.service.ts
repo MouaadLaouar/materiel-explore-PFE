@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaService } from 'src/prisma.service';
 import { DeptDto, UpdateDeptDto } from './dto/create.dept.dto';
 
 @Injectable()
 export class DepartementService {
-    constructor(private prisma: PrismaClient) {}
+    constructor(private prisma: PrismaService) {}
 
     async GetAll() {
         return await this.prisma.departement.findMany();
