@@ -58,3 +58,7 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 #prisma (ignore all the fodler except the schema.prisma file)
 prisma/*  
 !prisma/schema.prisma
+
+# ignore all the picture inside the upload folders or let say all the files
+/upload/*
+!upload/.gitKeep
