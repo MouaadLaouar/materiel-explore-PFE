@@ -74,4 +74,21 @@ export class UsersService {
               }
         }
     }
+
+    async GetUserById(ID: string) {
+        const user = await this.prisma.user.findUnique({
+            where: {
+                ID: ID
+            }
+        })
+
+        if(!user) {
+            throw new BadRequestException();
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { Password, ...result } = user;
+
+        return result
+    }
 }

@@ -13,6 +13,11 @@ export class UsersController {
         return this.usersService.GetAll();
     }
 
+    @Get(':id')
+    GetUserById(@Param() params: any) {
+        return this.usersService.GetUserById(params.id)
+    }
+
     @Put(':id')
     UpdateUser(@Param() pramas: any, @Body() Data: UpdateUserDto) {
         return this.usersService.UpdateUser(Data);
