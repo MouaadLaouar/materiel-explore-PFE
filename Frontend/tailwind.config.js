@@ -5,8 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'outfit': ['outfit', 'sans-serif'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [import('@tailwindcss/forms'),],
 }
 

@@ -1,0 +1,94 @@
+// import { useEffect, useState } from "react";
+// import SignIn from "./Utils/SignIn";
+// import SignUp from "./Utils/SignUp";
+// import fetchUserDataIfLoggedIn from "./Utils/fetchUserDataIfLoggedIn";
+import NavBar from "./Components/NavBar/NavBar.Component";
+import SignIn from "./pages/SignIn/SignIn.component";
+
+function App() {
+  // const [userData, setuserData] = useState(null);
+  // // here how to signIn
+  // const handleSignIn = async (Email, Password) => {
+  //   try {
+  //     const data = await SignIn(Email, Password);
+  //     console.log(data);
+  //     setuserData(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // here how to SignUp
+  // const User = {
+  //   FirstName: "Laouar",
+  //   LastName: "Montasser",
+  //   Email: "laouar.montasser@gmail.com",
+  //   Phone: "+213550505050",
+  //   Password: "123456789",
+  //   Role: "USER", // or "ADMIN"
+  // };
+
+  // const handleSignUp = async () => {
+  //   try {
+  //     const data = await SignUp(User);
+  //     console.log(data);
+  //     setuserData(data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // here if a user already Login In and when
+  // he enter to the website again he redirect to the dashbord if he already
+  // sign in that it, in this example when a user is already Login
+  // i show his data in console and if note just i retrun false
+
+  // we need useEffect in this situation
+  // const checkUser = async () => {
+  //   const ID = localStorage.getItem("userID");
+  //   if (ID) {
+  //     try {
+  //       const data = await fetchUserDataIfLoggedIn(ID);
+  //       console.log("checkUser => ", data);
+
+  //       // just for fun i add the data to a state to render it
+  //       setuserData(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
+  // useEffect(() => {
+  //   checkUser();
+  // }, []);
+
+  return (
+    <div>
+      <NavBar/>
+      <SignIn/>
+      {/* <h1>Hello world!</h1>
+      <button
+        className="text-left"
+        onClick={() => handleSignIn(User.Email, User.Password)}
+      >
+        Sign In
+      </button>
+      <button className="text-left" onClick={() => handleSignUp()}>
+        Sign Up
+      </button>
+      <div>
+        {userData ? (
+          <>
+            <h1 className="text-xl">
+              {userData.FirstName} {userData.LastName}
+            </h1>
+          </>
+        ) : (
+          <h1>No User Log In</h1>
+        )}
+      </div> */}
+    </div>
+  );
+}
+
+export default App;
