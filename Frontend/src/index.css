@@ -9,8 +9,40 @@
 } */
 @layer base {
   @font-face {
-    font-family: 'outfit';
-    src: url(fonts/Outfit-VariableFont_wght.ttf) format('woff2');
+    font-family: "outfit";
+    src: url(fonts/Outfit-VariableFont_wght.ttf) format("woff2");
+  }
+  @font-face {
+    font-family: "mdMed";
+    src: url(fonts/DMSans-Medium.ttf) format("woff2");
+  }
+  @font-face {
+    font-family: "mdReg";
+    src: url(fonts/DMSans-Regular.ttf) format("woff2");
+  }
+  @font-face {
+    font-family: "mdSemi";
+    src: url(fonts/DMSans-SemiBold.ttf) format("woff2");
+  }
+
+  @font-face {
+    font-family: "mdBold";
+    src: url(fonts/DMSans-Bold.ttf) format("woff2");
+  }
+
+  @font-face {
+    font-family: "BrandFont";
+    src: url(fonts/Raleway-SemiBold.ttf) format("woff2");
+  }
+
+  @font-face {
+    font-family: "afacad";
+    src: url(fonts/Afacad-Regular.ttf) format("woff2");
+  }
+
+  @font-face {
+    font-family: "kanit";
+    src: url(fonts/Kanit-Regular.ttf) format("woff2");
   }
 }
 
@@ -18,4 +50,9 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+:root {
+  scrollbar-color: teal white;
+  scrollbar-width: thin;
 }

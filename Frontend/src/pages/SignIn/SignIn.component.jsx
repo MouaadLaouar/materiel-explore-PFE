@@ -2,9 +2,12 @@ import { VscAccount } from "react-icons/vsc";
 import { useState } from "react";
 import signIn from "../../Utils/SignIn";
 import { useNavigate } from "react-router";
+import { useAtom } from "jotai";
+import { initialNavigationAtom } from "../../atom";
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [navigation, setNavigation] = useAtom(initialNavigationAtom);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,6 +35,12 @@ export default function SignIn() {
     e.preventDefault();
     handleSignIn(formData.email, formData.password);
     localStorage.setItem("activeNavItem", "Home");
+    setNavigation(
+      navigation.map((item) => ({
+        ...item,
+        current: item.name === "Home",
+      }))
+    );
     navigate("/");
     window.location.reload();
   };
