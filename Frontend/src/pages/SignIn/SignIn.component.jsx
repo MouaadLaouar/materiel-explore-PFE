@@ -2,12 +2,14 @@ import { VscAccount } from "react-icons/vsc";
 import { useState } from "react";
 import signIn from "../../Utils/SignIn";
 import { useNavigate } from "react-router";
-import { useAtom } from "jotai";
-import { initialNavigationAtom } from "../../atom";
+import { useSetAtom } from "jotai";
+import { userIdAtom } from "../../atom";
+import toast from "react-hot-toast";
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [navigation, setNavigation] = useAtom(initialNavigationAtom);
+  const setUserId = useSetAtom(userIdAtom);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -22,27 +24,28 @@ export default function SignIn() {
     });
   };
 
-  const handleSignIn = async (Email, Password) => {
+  const handleSubmit = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
     try {
-      const data = await signIn(Email, Password);
-      console.log(data);
+      
+      const data = await signIn(formData.email, formData.password);
+      if (data.ID) {
+        console.log("Connected");
+        const Id = data.ID;
+        setUserId(Id);
+        localStorage.setItem("userID", Id);
+        localStorage.setItem("activeNavItem", "Home");
+        navigate("/");
+        toast.success("Connected");
+      } else {
+        toast.error("Sign In Failed");
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handleSignIn(formData.email, formData.password);
-    localStorage.setItem("activeNavItem", "Home");
-    setNavigation(
-      navigation.map((item) => ({
-        ...item,
-        current: item.name === "Home",
-      }))
-    );
-    navigate("/");
-    window.location.reload();
   };
 
   return (
@@ -71,6 +74,7 @@ export default function SignIn() {
                   type="email"
                   autoComplete="email"
                   required
+                  disabled={isLoading}
                   value={formData.email}
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -89,7 +93,7 @@ export default function SignIn() {
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-semibold text-black hover:text-blue-800"
+                    className="font-semibold text-black hover:text-teal-700"
                   >
                     Forgot password?
                   </a>
@@ -102,6 +106,7 @@ export default function SignIn() {
                   type="password"
                   autoComplete="current-password"
                   required
+                  disabled={isLoading}
                   value={formData.password}
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -113,6 +118,7 @@ export default function SignIn() {
               <button
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-gray-900 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                disabled={isLoading}
               >
                 Sign in
               </button>
@@ -122,7 +128,7 @@ export default function SignIn() {
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a Member ?{" "}
             <a
-              className="font-semibold leading-6 text-black hover:text-blue-800"
+              className="font-semibold leading-6 text-black hover:text-teal-700"
               onClick={() => {
                 navigate("/signup");
               }}

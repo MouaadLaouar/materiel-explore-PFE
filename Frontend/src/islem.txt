@@ -92,3 +92,31 @@ function App() {
 }
 
 export default App;
+
+
+ // const handleSignIn = async (Email, Password) => {
+  //   try {
+  //     const data = await signIn(Email, Password);
+  //     console.log(data);
+  //     setUserId(data.ID);
+  //     // localStorage.setItem("userID", userId);
+  //     // console.log(localStorage.getItem("userID"));
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   handleSignIn(formData.email, formData.password);
+  //   console.log(userId);
+  //   localStorage.setItem("activeNavItem", "Home");
+  //   // setNavigation(
+  //   //   navigation.map((item) => ({
+  //   //     ...item,
+  //   //     current: item.name === "Home",
+  //   //   }))
+  //   // );
+  //   // navigate("/");
+  //   // window.location.reload();
+  // };

@@ -12,5 +12,5 @@ export const signInNavigationAtom = atom([
     { name: "Sign In", href: "/signIn", current: false },
 ]);
 
-export const userId = atom("");
+export const userIdAtom = atom(null);
 

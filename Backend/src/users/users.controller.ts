@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Param, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/Guards/auth.guard';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/create.user.dto';
@@ -14,6 +14,7 @@ export class UsersController {
     }
 
     @Get(':id')
+    @HttpCode(200)
     GetUserById(@Param() params: any) {
         return this.usersService.GetUserById(params.id)
     }

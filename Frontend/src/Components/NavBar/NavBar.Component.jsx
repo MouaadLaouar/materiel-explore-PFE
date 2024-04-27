@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Logo.png";
@@ -7,14 +7,14 @@ import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
 import SignOut from "../../Utils/signOut";
 import { useNavigate } from "react-router";
 import { useAtom } from "jotai";
-import { initialNavigationAtom, signInNavigationAtom } from "../../atom";
+import { initialNavigationAtom, signInNavigationAtom, userIdAtom } from "../../atom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(userIdAtom);
   const navigate = useNavigate();
 
   const [navigation, setNavigation] = useAtom(initialNavigationAtom);
@@ -47,9 +47,9 @@ export default function NavBar() {
     if (ID) {
       try {
         const data = await fetchUserDataIfLoggedIn(ID);
-        setIsLoggedIn(data);
+        setIsLoggedIn(data.ID);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
@@ -159,13 +159,16 @@ export default function NavBar() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
+                              onClick={() => {
+                                handleItemClick("Dashboard");
+                                navigate("Dashboard");
+                              }}
                             >
-                              Your Profile
+                              Dashboard
                             </a>
                           )}
                         </Menu.Item>
