@@ -1,9 +1,13 @@
-import { VscAccount } from "react-icons/vsc";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import signIn from "../../Utils/SignIn";
 import { useNavigate } from "react-router";
 import { useSetAtom } from "jotai";
 import { userIdAtom } from "../../atom";
+
+import { VscAccount } from "react-icons/vsc";
+import signIn from "../../Utils/SignIn";
 import toast from "react-hot-toast";
 
 export default function SignIn() {
@@ -11,31 +15,30 @@ export default function SignIn() {
   const setUserId = useSetAtom(userIdAtom);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+  const schema = yup.object().shape({
+    email: yup.string().email().required("Please Enter Your Email"),
+    password: yup
+      .string()
+      .min(8)
+      .max(16)
+      .required("Please Enter Your Password"),
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (data) => {
     setIsLoading(true);
-    e.preventDefault();
     try {
-      
-      const data = await signIn(formData.email, formData.password);
-      if (data.ID) {
+      const userData = await signIn(data.email, data.password);
+      if (userData.ID) {
         console.log("Connected");
-        const Id = data.ID;
+        const Id = userData.ID;
         setUserId(Id);
         localStorage.setItem("userID", Id);
-        localStorage.setItem("activeNavItem", "Home");
         navigate("/Dashboard");
         toast.success("Connected");
       } else {
@@ -59,7 +62,7 @@ export default function SignIn() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit(handleFormSubmit)}>
             <div>
               <label
                 htmlFor="email"
@@ -73,13 +76,14 @@ export default function SignIn() {
                   name="email"
                   type="email"
                   autoComplete="email"
-                  required
                   disabled={isLoading}
-                  value={formData.email}
-                  onChange={handleInputChange}
+                  {...register("email")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-4">
+                {errors.email?.message}
+              </span>
             </div>
 
             <div>
@@ -105,13 +109,14 @@ export default function SignIn() {
                   name="password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   disabled={isLoading}
-                  value={formData.password}
-                  onChange={handleInputChange}
+                  {...register("password")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-4">
+                {errors.password?.message}
+              </span>
             </div>
 
             <div>

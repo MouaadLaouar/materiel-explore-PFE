@@ -1,39 +1,65 @@
-import { FaUserGraduate } from "react-icons/fa6";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router";
 import { useState } from "react";
-import signUp from "../../Utils/SignUp";
 import { userIdAtom } from "../../atom";
 import { useSetAtom } from "jotai";
+
+import { FaUserGraduate } from "react-icons/fa6";
+import signUp from "../../Utils/SignUp";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
 
   const setUserId = useSetAtom(userIdAtom);
-  const [userData, setUserData] = useState({
-    FirstName: "",
-    LastName: "",
-    Phone: "",
-    Email: "",
-    Password: "",
-    Role: "USER",
+
+  const schema = yup.object().shape({
+    FirstName: yup.string().required("Please Enter Your First Name"),
+    LastName: yup.string().required("Please Enter Your Last Name"),
+    Phone: yup
+      .string()
+      .required("Please Enter Your Phone Number")
+      .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
+    Email: yup.string().email().required("Please Enter Your Email"),
+
+    Password: yup.string().min(8).max(16).required("The Password Is Required"),
+    ConfirmPassword: yup
+      .string()
+      .oneOf([yup.ref("Password"), null], "Password Don't Match")
+      .required(),
   });
 
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (data) => {
     try {
-      const data = await signUp(userData);
-      console.log(data);
-      const Id = data.ID;
-      setUserId(Id);
-      localStorage.setItem("userID", Id);
-      localStorage.setItem("activeNavItem", "Home");
-      navigate("/");
-      setIsLoading(false);
+      const newUserData = await signUp({
+        FirstName: data.FirstName,
+        LastName: data.LastName,
+        Phone: data.Phone,
+        Email: data.Email,
+        Password: data.Password,
+        Role: "USER",
+      });
+      if (newUserData.ID) {
+        console.log(newUserData);
+        const Id = newUserData.ID;
+        setUserId(Id);
+        localStorage.setItem("userID", Id);
+        navigate("/Dashboard");
+        toast.success("Account Created Successfully");
+        setIsLoading(false);
+      } else {
+        toast.error("Sign Up Failed");
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error(error);
       setIsLoading(false);
@@ -51,7 +77,7 @@ export default function SignUp() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit(handleFormSubmit)}>
             {/* First Name */}
             <div>
               <label
@@ -62,17 +88,18 @@ export default function SignUp() {
               </label>
               <div className="mt-2">
                 <input
-                  id="firstName"
+                  id="FirstName"
                   name="FirstName"
                   type="text"
                   autoComplete="firstName"
-                  required
                   disabled={isLoading}
-                  value={userData.FirstName}
-                  onChange={handleChange}
+                  {...register("FirstName")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.FirstName?.message}
+              </span>
             </div>
 
             {/* Last Name */}
@@ -85,17 +112,18 @@ export default function SignUp() {
               </label>
               <div className="mt-2">
                 <input
-                  id="lastName"
+                  id="LastName"
                   name="LastName"
                   type="text"
                   autoComplete="lastName"
-                  required
                   disabled={isLoading}
-                  value={userData.LastName}
-                  onChange={handleChange}
+                  {...register("LastName")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.LastName?.message}
+              </span>
             </div>
 
             {/* Phone Number */}
@@ -112,13 +140,14 @@ export default function SignUp() {
                   name="Phone"
                   type="text"
                   autoComplete="Phone"
-                  required
                   disabled={isLoading}
-                  value={userData.Phone}
-                  onChange={handleChange}
+                  {...register("Phone")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.Phone?.message}
+              </span>
             </div>
 
             {/* Email */}
@@ -131,17 +160,19 @@ export default function SignUp() {
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
+                  id="Email"
                   name="Email"
                   type="email"
                   autoComplete="email"
-                  required
                   disabled={isLoading}
-                  value={userData.Email}
-                  onChange={handleChange}
+                  {...register("Email")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.Email?.message}
+              </span>
             </div>
 
             {/* Password */}
@@ -160,13 +191,42 @@ export default function SignUp() {
                   name="Password"
                   type="password"
                   autoComplete="current-password"
-                  required
                   disabled={isLoading}
-                  value={userData.Password}
-                  onChange={handleChange}
+                  {...register("Password")}
                   className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
+
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.Password?.message}
+              </span>
+            </div>
+
+            {/* Confirm Password */}
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Confirm Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="current-password"
+                  disabled={isLoading}
+                  {...register("ConfirmPassword")}
+                  className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
+                {errors.ConfirmPassword?.message}
+              </span>
             </div>
 
             <div>
