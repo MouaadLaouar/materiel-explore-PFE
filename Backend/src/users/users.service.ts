@@ -10,18 +10,28 @@ export class UsersService {
     constructor(private prisma: PrismaService) {}
 
     async GetAll() {
-        return await this.prisma.user.findMany()
+        return await this.prisma.user.findMany({
+            select: {
+                ID: true,
+                FirstName: true,
+                LastName: true,
+                Email: true,
+                Phone: true,
+                Role: true,
+                CreatedAt: true,
+            },
+        });
     }
 
     async findOne(Email: string) {
         return await this.prisma.user.findUnique({
             where: {
-                Email: Email
-            }
-        })
+                Email: Email,
+            },
+        });
     }
 
-    async createUser(User:CreateUserDto) {
+    async createUser(User: CreateUserDto) {
         try {
             return await this.prisma.user.create({
                 data: {
@@ -30,19 +40,20 @@ export class UsersService {
                     Email: User.Email,
                     Password: User.Password,
                     Phone: User.Phone,
-                    Role: User.Role
-                }
-            })
+                    Role: User.Role,
+                },
+            });
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                if (error.code === 'P2002') { // Unique constraint violation
-                  throw new BadRequestException('Email already exists');
+                if (error.code === 'P2002') {
+                    // Unique constraint violation
+                    throw new BadRequestException('Email already exists');
                 } else {
-                  throw new InternalServerErrorException('Error creating user');
+                    throw new InternalServerErrorException('Error creating user');
                 }
-              } else {
+            } else {
                 throw new InternalServerErrorException('Unexpected error');
-              }
+            }
         }
     }
 
@@ -51,7 +62,7 @@ export class UsersService {
         try {
             return this.prisma.user.update({
                 where: {
-                    ID: Data.Id
+                    ID: Data.Id,
                 },
                 data: {
                     FirstName: Data.FirstName,
@@ -59,36 +70,37 @@ export class UsersService {
                     Email: Data.Email,
                     Phone: Data.Phone,
                     Password: Data.Password,
-                    Role: Data.Role
-                }
-            })
+                    Role: Data.Role,
+                },
+            });
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                if (error.code === 'P2002') { // Unique constraint violation
-                  throw new BadRequestException('Email already exists');
+                if (error.code === 'P2002') {
+                    // Unique constraint violation
+                    throw new BadRequestException('Email already exists');
                 } else {
-                  throw new InternalServerErrorException('Error creating user');
+                    throw new InternalServerErrorException('Error creating user');
                 }
-              } else {
+            } else {
                 throw new InternalServerErrorException('Unexpected error');
-              }
+            }
         }
     }
 
     async GetUserById(ID: string) {
         const user = await this.prisma.user.findUnique({
             where: {
-                ID: ID
-            }
-        })
+                ID: ID,
+            },
+        });
 
-        if(!user) {
+        if (!user) {
             throw new BadRequestException();
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { Password, ...result } = user;
 
-        return result
+        return result;
     }
 }
