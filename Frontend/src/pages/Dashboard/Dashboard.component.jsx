@@ -5,11 +5,12 @@ import Admin from "./Admin";
 import User from "./User";
 import { useAtom } from "jotai";
 import { userIdAtom } from "../../atom";
+import SuperAdmin from "./SuperAdmin";
 
 const Dashboard = () => {
   const [error, setError] = useState(false);
   const [user, setUser] = useState(null);
-  const [isLoggedIn] = useAtom(userIdAtom)
+  const [isLoggedIn] = useAtom(userIdAtom);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -34,18 +35,18 @@ const Dashboard = () => {
     return (
       <>
         <Admin />
-        {/* <div className="w-80">
-          <Sidebar />
-        </div> */}
       </>
     );
   } else if (user?.Role === "USER") {
     return (
       <>
         <User />
-        {/* <div className="w-80">
-          <Sidebar />
-        </div> */}
+      </>
+    );
+  } else if (user?.Role === "SUPERADMIN") {
+    return (
+      <>
+        <SuperAdmin />
       </>
     );
   }
