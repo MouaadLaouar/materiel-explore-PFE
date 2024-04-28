@@ -2,10 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 
 import NavBar from "./Components/NavBar";
-import SignIn from "./Pages/SignIn";
-import Home from "./Pages/Home";
-import SignUp from "./Pages/SignUp";
-import NotFound from "./Pages/NotFound";
+// import SignIn from "./Pages/SignIn";
+import SignIn from "./Pages/SignIn/SignIn.component";
+// import Home from "./Pages/Home";
+import Home from "./Pages/Home/Home.component";
+// import SignUp from "./Pages/SignUp";
+import SignUp from "./Pages/SignUp/SignUp.component"
+// import NotFound from "./Pages/NotFound";
+import NotFound from "./Pages/NotFound/NotFound.component"
 // import Footer from "./Components/Footer/Footer.Component";
 import Contact from "./Pages/Contact";
 import Dashboard from "./Pages/Dashboard";
