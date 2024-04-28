@@ -3,10 +3,13 @@ import { useEffect, useState } from "react";
 import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
 import Admin from "./Admin";
 import User from "./User";
+import { useAtom } from "jotai";
+import { userIdAtom } from "../../atom";
 
 const Dashboard = () => {
   const [error, setError] = useState(false);
   const [user, setUser] = useState(null);
+  const [isLoggedIn] = useAtom(userIdAtom)
 
   useEffect(() => {
     const checkUser = async () => {
@@ -21,7 +24,7 @@ const Dashboard = () => {
 
     checkUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isLoggedIn]);
 
   if (error) {
     return <h1>Error</h1>;

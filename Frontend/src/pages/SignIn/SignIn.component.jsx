@@ -36,7 +36,7 @@ export default function SignIn() {
         setUserId(Id);
         localStorage.setItem("userID", Id);
         localStorage.setItem("activeNavItem", "Home");
-        navigate("/");
+        navigate("/Dashboard");
         toast.success("Connected");
       } else {
         toast.error("Sign In Failed");

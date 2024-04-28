@@ -7,9 +7,9 @@ import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
 import SignOut from "../../Utils/signOut";
 import { useNavigate } from "react-router";
 import { useAtom } from "jotai";
-import { initialNavigationAtom, signInNavigationAtom, userIdAtom } from "../../atom";
+import { userIdAtom } from "../../atom";
 
-import { Pages } from './NavBar.Helper'
+import { Pages } from "./NavBar.Helper";
 import { useLocation } from "react-router-dom";
 
 function classNames(...classes) {
@@ -17,13 +17,10 @@ function classNames(...classes) {
 }
 
 export default function NavBar() {
-  const location = useLocation()
+  const location = useLocation();
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(userIdAtom);
   const navigate = useNavigate();
-
-  const [navigation, setNavigation] = useAtom(initialNavigationAtom);
-  const [signIn, setSignIn] = useAtom(signInNavigationAtom);
 
   const checkUser = async () => {
     const ID = localStorage.getItem("userID");
@@ -37,21 +34,7 @@ export default function NavBar() {
     }
   };
 
-  const setActiveNavItem = () => {
-    const activeItem = localStorage.getItem("activeNavItem");
-    if (activeItem) {
-      setNavigation(
-        navigation.map((item) => ({
-          ...item,
-          current: item.name === activeItem,
-        }))
-      );
-      setSignIn([{ ...signIn[0], current: "Sign In" === activeItem }]);
-    }
-  };
-
   useEffect(() => {
-    setActiveNavItem();
     checkUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -79,7 +62,6 @@ export default function NavBar() {
                 <div
                   className="flex flex-shrink-0 items-center cursor-pointer"
                   onClick={() => {
-                    // handleItemClick("Home");
                     navigate("/");
                   }}
                 >
@@ -169,7 +151,7 @@ export default function NavBar() {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/"
                               className={classNames(
                                 active ? "bg-gray-100" : "",
                                 "block px-4 py-2 text-sm text-gray-700"
@@ -190,16 +172,14 @@ export default function NavBar() {
               ) : (
                 <a
                   className={classNames(
-                    signIn[0].current
+                    location.pathname === "/signIn"
                       ? "bg-teal-700 text-white"
                       : "text-black hover:bg-teal-600 hover:text-white",
                     "rounded-md px-3 py-2 text-sm font-medium sm:ml-3 sm:relative absolute "
                   )}
-                  onClick={() => {
-                    navigate(signIn[0].href);
-                  }}
+                  href="/signIn"
                 >
-                  {signIn[0].name}
+                  Sign In
                 </a>
               )}
             </div>
@@ -207,12 +187,12 @@ export default function NavBar() {
 
           <Disclosure.Panel className="sm:hidden">
             <div className="space-y-1 px-2 pb-3 pt-5 flex flex-col">
-              {navigation.map((item) => (
+              {Pages.map((item) => (
                 <Disclosure.Button
                   key={item.name}
                   as="a"
                   className={classNames(
-                    item.current
+                    item.href === location.pathname
                       ? "bg-teal-700 text-white"
                       : "text-black hover:bg-teal-600 hover:text-white ",
                     "block rounded-md px-3 py-2 text-base font-medium "

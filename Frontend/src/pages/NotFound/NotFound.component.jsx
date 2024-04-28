@@ -1,11 +1,6 @@
-import { useNavigate } from "react-router";
 import notFound from "../../assets/notFound.svg";
-import { useAtom } from "jotai";
-import { initialNavigationAtom } from "../../atom";
 
 export default function NotFound() {
-  const navigate = useNavigate();
-  const [navigation, setNavigation] = useAtom(initialNavigationAtom);
 
   return (
     <>
@@ -22,30 +17,12 @@ export default function NotFound() {
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
               className="rounded-md bg-teal-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-teal-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              onClick={() => {
-                localStorage.setItem("activeNavItem", "Home");
-                setNavigation(
-                  navigation.map((item) => ({
-                    ...item,
-                    current: item.name === "Home",
-                  }))
-                );
-                navigate("/");
-              }}
+              href="/"
             >
               Go back home
             </a>
             <a
-              onClick={() => {
-                localStorage.setItem("activeNavItem", "Contact");
-                setNavigation(
-                  navigation.map((item) => ({
-                    ...item,
-                    current: item.name === "Contact",
-                  }))
-                );
-                navigate("/contact");
-              }}
+              href="/contact"
               className="rounded-md  px-3.5 py-2.5 text-sm font-semibold text-black shadow-sm hover:bg-teal-700  hover:text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Contact support <span aria-hidden="true">&rarr;</span>
