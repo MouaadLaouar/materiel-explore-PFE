@@ -85,7 +85,6 @@ export default function NavBar() {
                         aria-current={item.current ? "page" : undefined}
                         onClick={() => {
                           navigate(item.href);
-                          // console.log(item.href);
                         }}
                       >
                         {item.name}
@@ -177,7 +176,9 @@ export default function NavBar() {
                       : "text-black hover:bg-teal-600 hover:text-white",
                     "rounded-md px-3 py-2 text-sm font-medium sm:ml-3 sm:relative absolute "
                   )}
-                  href="/signIn"
+                  onClick={() => {
+                    navigate("/Signin");
+                  }}
                 >
                   Sign In
                 </a>
