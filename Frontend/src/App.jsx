@@ -23,11 +23,11 @@ function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="SignIn" element={<SignIn />} />
-          <Route path="SignUp" element={<SignUp />} />
-          <Route path="Contact" element={<Contact />} />
-          <Route path="Dashboard" element={<Dashboard />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/SignIn" element={<SignIn />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          <Route path="/Contact" element={<Contact />} />
+          <Route path="/Dashboard" element={<Dashboard />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
         <Toaster position="top-center" reverseOrder={false} />
         {/* <Footer /> */}
