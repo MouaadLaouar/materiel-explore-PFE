@@ -14,3 +14,4 @@ export const signInNavigationAtom = atom([
 
 export const userIdAtom = atom(null);
 
+export const CurrentPage = atom('Home')

@@ -1,14 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+
 import NavBar from "./Components/NavBar";
-import SignIn from "./pages/SignIn";
-import Home from "./pages/Home";
-import SignUp from "./pages/SignUp";
-import NotFound from "./pages/NotFound";
+import SignIn from "./Pages/SignIn";
+import Home from "./Pages/Home";
+import SignUp from "./Pages/SignUp";
+import NotFound from "./Pages/NotFound";
 // import Footer from "./Components/Footer/Footer.Component";
-import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
+import Contact from "./Pages/Contact";
+import Dashboard from "./Pages/Dashboard";
 import { Toaster } from "react-hot-toast";
+
 
 function App() {
   return (

@@ -2,6 +2,7 @@
 // import { initialNavigationAtom, name, signInNavigationAtom } from "../../atom";
 
 export default function Home() {
+
   // const nameI = useAtom(initialNavigationAtom);
   // console.log(nameI)
 

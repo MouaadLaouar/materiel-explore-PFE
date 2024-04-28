@@ -9,38 +9,21 @@ import { useNavigate } from "react-router";
 import { useAtom } from "jotai";
 import { initialNavigationAtom, signInNavigationAtom, userIdAtom } from "../../atom";
 
+import { Pages } from './NavBar.Helper'
+import { useLocation } from "react-router-dom";
+
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function NavBar() {
+  const location = useLocation()
+
   const [isLoggedIn, setIsLoggedIn] = useAtom(userIdAtom);
   const navigate = useNavigate();
 
   const [navigation, setNavigation] = useAtom(initialNavigationAtom);
   const [signIn, setSignIn] = useAtom(signInNavigationAtom);
-
-  const handleItemClick = (name) => {
-    if (name === "Sign In") {
-      setSignIn([{ ...signIn[0], current: true }]);
-      setNavigation(
-        navigation.map((item) => ({
-          ...item,
-          current: false,
-        }))
-      );
-      navigate(signIn[0].href);
-    } else {
-      setNavigation(
-        navigation.map((item) => ({
-          ...item,
-          current: item.name === name,
-        }))
-      );
-      setSignIn([{ ...signIn[0], current: false }]);
-    }
-    localStorage.setItem("activeNavItem", name);
-  };
 
   const checkUser = async () => {
     const ID = localStorage.getItem("userID");
@@ -96,7 +79,7 @@ export default function NavBar() {
                 <div
                   className="flex flex-shrink-0 items-center cursor-pointer"
                   onClick={() => {
-                    handleItemClick("Home");
+                    // handleItemClick("Home");
                     navigate("/");
                   }}
                 >
@@ -108,20 +91,19 @@ export default function NavBar() {
 
                 <div className="hidden sm:ml-6 sm:flex sm:items-center">
                   <div className="flex space-x-4">
-                    {navigation.map((item) => (
+                    {Pages.map((item) => (
                       <a
                         key={item.name}
                         className={classNames(
-                          item.current
+                          item.href === location.pathname
                             ? "bg-teal-700 text-white"
                             : "text-black hover:bg-teal-600 hover:text-white",
                           "rounded-md px-3 py-2 text-sm font-medium"
                         )}
                         aria-current={item.current ? "page" : undefined}
                         onClick={() => {
-                          handleItemClick(item.name);
                           navigate(item.href);
-                          console.log(item.href);
+                          // console.log(item.href);
                         }}
                       >
                         {item.name}
@@ -164,7 +146,6 @@ export default function NavBar() {
                                 "block px-4 py-2 text-sm text-gray-700"
                               )}
                               onClick={() => {
-                                handleItemClick("Dashboard");
                                 navigate("Dashboard");
                               }}
                             >
@@ -215,7 +196,6 @@ export default function NavBar() {
                     "rounded-md px-3 py-2 text-sm font-medium sm:ml-3 sm:relative absolute "
                   )}
                   onClick={() => {
-                    handleItemClick(signIn[0].name);
                     navigate(signIn[0].href);
                   }}
                 >
@@ -239,7 +219,6 @@ export default function NavBar() {
                   )}
                   aria-current={item.current ? "page" : undefined}
                   onClick={() => {
-                    handleItemClick(item.name);
                     navigate(item.href);
                   }}
                 >
