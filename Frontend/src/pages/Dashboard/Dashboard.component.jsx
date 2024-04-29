@@ -3,16 +3,18 @@ import { useEffect, useState } from "react";
 import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
 import Admin from "./Admin";
 import User from "./User";
-import { useAtom } from "jotai";
-import { userIdAtom } from "../../atom";
+import { useAtom, useSetAtom } from "jotai";
+import { userIdAtom, userRoleAtom } from "../../atom";
 import SuperAdmin from "./SuperAdmin";
 import { useNavigate } from "react-router";
+import Sidebar from "../../Components/Sidebar/Sidebar.component";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoggedIn] = useAtom(userIdAtom);
+  const setUserRole = useSetAtom(userRoleAtom);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -53,22 +55,28 @@ const Dashboard = () => {
   }
 
   if (user?.Role === "ADMIN") {
+    setUserRole("ADMIN");
     return (
-      <>
+      <div className="flex">
+        <Sidebar />
         <Admin />
-      </>
+      </div>
     );
   } else if (user?.Role === "USER") {
+    setUserRole("USER");
     return (
-      <>
+      <div className="flex">
+        <Sidebar />
         <User />
-      </>
+      </div>
     );
   } else if (user?.Role === "SUPERADMIN") {
+    setUserRole("SUPERADMIN");
     return (
-      <>
+      <div className="flex">
+        <Sidebar />
         <SuperAdmin />
-      </>
+      </div>
     );
   }
 };

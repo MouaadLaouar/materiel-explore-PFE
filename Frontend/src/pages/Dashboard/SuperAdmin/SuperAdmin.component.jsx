@@ -1,6 +1,5 @@
-
 const SuperAdmin = () => {
-  return <div>Super Admin</div>;
+  return <div>SUPER ADMIN</div>;
 };
 
 export default SuperAdmin;
