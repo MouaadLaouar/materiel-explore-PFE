@@ -9,6 +9,10 @@ import ChangePassword from "./components/ChangePassword";
 import toast from "react-hot-toast";
 import UpdateUser from "../../Utils/UpdateUser";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 const Profile = () => {
   const userId = useAtom(userIdAtom);
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
@@ -66,6 +70,7 @@ const Profile = () => {
       if (!isUserDataEmpty()) {
         await UpdateUser({ ...userData, Password: password });
         toast.success("Profile Updated Successfully");
+        setPassword("");
         console.log(userData);
       } else {
         toast.error("Fill All The Fields");
@@ -83,7 +88,7 @@ const Profile = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div className="flex min-h-full w-full flex-1 flex-col justify-center ">
+    <div className="flex  w-full flex-1 flex-col justify-center ">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Account Informations
@@ -108,7 +113,7 @@ const Profile = () => {
           {/* First Name */}
           <div>
             <label
-              htmlFor="FisrtName"
+              htmlFor="FirstName"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               First Name
@@ -123,7 +128,10 @@ const Profile = () => {
                 value={userData.FirstName}
                 onChange={handleInputChange}
                 disabled={isPasswordCorrect}
-                className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={classNames(
+                  isPasswordCorrect ? "bg-gray-200" : "bg-white",
+                  "block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                )}
               />
             </div>
           </div>
@@ -146,7 +154,10 @@ const Profile = () => {
                 disabled={isPasswordCorrect}
                 onChange={handleInputChange}
                 value={userData.LastName}
-                className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={classNames(
+                  isPasswordCorrect ? "bg-gray-200" : "bg-white",
+                  "block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                )}
               />
             </div>
           </div>
@@ -171,7 +182,10 @@ const Profile = () => {
                 value={userData.Phone}
                 pattern="\d{10}"
                 title="Phone Number must be 10 digits"
-                className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={classNames(
+                  isPasswordCorrect ? "bg-gray-200" : "bg-white",
+                  "block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                )}
               />
             </div>
           </div>
@@ -194,7 +208,10 @@ const Profile = () => {
                 disabled={isPasswordCorrect}
                 onChange={handleInputChange}
                 value={userData.Email}
-                className="block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className={classNames(
+                  isPasswordCorrect ? "bg-gray-200" : "bg-white",
+                  "block w-full rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                )}
               />
             </div>
           </div>
@@ -235,7 +252,13 @@ const Profile = () => {
               setPassword={setPassword}
             />
           )}
-          {page === "Change" && <ChangePassword setOpen={setOpen} />}
+          {page === "Change" && (
+            <ChangePassword
+              setOpen={setOpen}
+              userData={userData}
+              setPassword={setPassword}
+            />
+          )}
         </PopUp>
       </div>
     </div>

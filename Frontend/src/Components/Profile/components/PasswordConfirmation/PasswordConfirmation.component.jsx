@@ -53,7 +53,7 @@ const PasswordConfirmation = ({
       <div className="my-5">
         <div className="flex items-center justify-between">
           <label
-            htmlFor="password"
+            htmlFor="myPassword"
             className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
           >
             Password
@@ -62,7 +62,7 @@ const PasswordConfirmation = ({
         <div className="mt-2">
           <input
             id="myPassword"
-            name="Password"
+            name="myPassword"
             type="password"
             required
             onChange={(e) => {
