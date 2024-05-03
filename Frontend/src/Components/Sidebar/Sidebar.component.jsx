@@ -1,7 +1,7 @@
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { AdminPages, SuperAdminPages, UserPages } from "./SideBar.Helper";
 import { useEffect, useState } from "react";
-import { userRoleAtom } from "../../atom";
+import { sideBarActivePageAtom, userRoleAtom } from "../../atom";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -10,14 +10,18 @@ function classNames(...classes) {
 const Sidebar = () => {
   const [userViewPerRole, setUserViewPerRole] = useState([]);
   const userRole = useAtom(userRoleAtom);
+  const setSideBarActivePage = useSetAtom(sideBarActivePageAtom);
 
   useEffect(() => {
     if (userRole[0] === "USER") {
       setUserViewPerRole(UserPages);
+      setSideBarActivePage(UserPages[0].name);
     } else if (userRole[0] === "ADMIN") {
       setUserViewPerRole(AdminPages);
+      setSideBarActivePage(AdminPages[0].name);
     } else if (userRole[0] === "SUPERADMIN") {
       setUserViewPerRole(SuperAdminPages);
+      setSideBarActivePage(SuperAdminPages[0].name);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -29,11 +33,20 @@ const Sidebar = () => {
             <li
               key={item.name}
               className={classNames(
-                item.href === location.pathname
+                item.isActive
                   ? "text-teal-600 "
                   : "text-black hover:text-teal-600 ",
                 " mb-7 text-sm leading-tight flex items-center cursor-pointer "
               )}
+              onClick={() => {
+                setSideBarActivePage(item.name);
+                setUserViewPerRole(
+                  userViewPerRole.map((page) => ({
+                    ...page,
+                    isActive: page.name === item.name,
+                  }))
+                );
+              }}
             >
               <item.icon />
               &nbsp; {item.name}
