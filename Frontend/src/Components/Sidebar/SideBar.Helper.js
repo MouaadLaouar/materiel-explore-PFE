@@ -19,7 +19,7 @@ export const SuperAdminPages = [
 ];
 
 export const UserPages = [
-  { name: "Profile", href: "#", icon: CgProfile, isActive: true },
+  { name: "Profile", href: "#", icon: CgProfile, isActive: true, },
   // { name: "Departments", href: "#", icon: FaBuilding, isActive: false },
   { name: "Borrowed Materials", href: "#", icon: GiMaterialsScience, isActive: false },
 ];
