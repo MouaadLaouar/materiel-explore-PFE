@@ -40,7 +40,7 @@ const Contact = () => {
             Contact
           </h1>
           <p className=" text-xl font-medium font-mdMed text-center text-gray-700">
-            Your Feedback is important to us
+            Help us improve with your feedback
           </p>
           <div className=" items-center mt-12">
             <div className=" flex flex-col">
