@@ -27,7 +27,7 @@ const Sidebar = () => {
   }, []);
   return (
     <>
-      <div className="min-w-52   [box-shadow:0_3px_5px_rgba(117,_117,_117,_0.3)]">
+      <div className="min-w-52 min-h-screen  [box-shadow:0_3px_5px_rgba(117,_117,_117,_0.3)]">
         <ul className="p-7 pt-16 font-mdMed">
           {userViewPerRole.map((item) => (
             <li
