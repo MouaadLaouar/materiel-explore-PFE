@@ -4,7 +4,7 @@ import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
 import { useEffect, useState } from "react";
 
 import PopUp from "../PopUp";
-import PasswordConfirmation from "./components/PasswordConfirmation";
+import PasswordConfirmation from "../PasswordConfirmation";
 import ChangePassword from "./components/ChangePassword";
 import toast from "react-hot-toast";
 import UpdateUser from "../../Utils/UpdateUser";

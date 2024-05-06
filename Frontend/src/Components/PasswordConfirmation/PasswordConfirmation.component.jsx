@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { FaShieldAlt } from "react-icons/fa";
-import SignIn from "../../../../Utils/SignIn";
+import SignIn from "../../Utils/SignIn";
 import toast from "react-hot-toast";
 
 const PasswordConfirmation = ({
@@ -11,7 +11,6 @@ const PasswordConfirmation = ({
   password,
   setPassword,
 }) => {
-
   const checkPassword = async () => {
     try {
       if (password !== "") {
