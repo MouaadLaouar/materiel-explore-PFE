@@ -39,6 +39,6 @@ export class UsersController {
 
     @Put('UpdateRole/:id')
     UpdateRole(@Param() params: any, @Body() Data: RoleDto) {
-        return this.UpdateRole(params.id, Data)
+        return this.usersService.UpdateRole(params.id, Data)
     }
 }

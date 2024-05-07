@@ -156,7 +156,7 @@ export class UsersService {
     }
 
     async UpdateRole(ID: string, Data: RoleDto) {
-        this.prisma.user.update({
+        await this.prisma.user.update({
             where: {
                 ID: ID
             },
@@ -164,5 +164,6 @@ export class UsersService {
                 Role: Data.Role
             }
         })
+        return true;
     }
 }
