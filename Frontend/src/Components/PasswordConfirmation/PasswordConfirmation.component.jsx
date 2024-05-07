@@ -18,7 +18,9 @@ const PasswordConfirmation = ({
         if (data.ID) {
           toast.success("Success");
           setOpen(false);
-          setIsPasswordCorrect(false);
+          setTimeout(() => {
+            setIsPasswordCorrect(false);
+          }, 2000);
         } else {
           toast.error("Wrong Password");
         }

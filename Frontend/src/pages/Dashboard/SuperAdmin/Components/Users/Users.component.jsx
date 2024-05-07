@@ -171,7 +171,12 @@ const Users = () => {
             setPassword={setPassword}
           />
         ) : (
-          <UserInfo setOpen={setOpen} User={selectedUserId} />
+          <UserInfo
+            setOpen={setOpen}
+            User={selectedUserId}
+            users={users}
+            setUsers={setUsers}
+          />
         )}
       </PopUp>
     </div>

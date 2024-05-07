@@ -1,7 +1,30 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
+import toast from "react-hot-toast";
 import { CgProfile } from "react-icons/cg";
+import UpdateUserRoleByID from "../../../../../../Utils/Update/UpdateUserRoleByID";
 
-const UserInfo = ({ setOpen, User }) => {
+const UserInfo = ({ setOpen, User, users, setUsers }) => {
+  const [userRole, setUserRole] = useState({
+    Role: User.Role,
+  });
+
+  const updateUserRole = async () => {
+    try {
+      await UpdateUserRoleByID(User.ID, userRole);
+      setOpen(false);
+      setUsers(
+        users.map((user) =>
+          user.ID === User.ID ? { ...user, Role: userRole.Role } : user
+        )
+      );
+      toast.success("User Info Updated");
+    } catch (error) {
+      toast.error(error.message);
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
@@ -35,6 +58,9 @@ const UserInfo = ({ setOpen, User }) => {
           <select
             defaultValue={User.Role}
             className=" w-36 border rounded px-2 py-1 focus:outline-none focus:ring-sky-600 focus:border-sky-500 "
+            onChange={(e) => {
+              setUserRole({ Role: e.target.value });
+            }}
           >
             <option value="USER">User </option>
             <option value="ADMIN">Admin </option>
@@ -48,8 +74,7 @@ const UserInfo = ({ setOpen, User }) => {
           type="button"
           className="inline-flex w-full justify-center rounded-md bg-sky-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-sky-500 sm:ml-3 sm:w-auto"
           onClick={() => {
-            // checkPassword();
-            setOpen(false);
+            updateUserRole();
           }}
         >
           Save
