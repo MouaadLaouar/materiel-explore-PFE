@@ -1,13 +1,13 @@
 import { useAtom } from "jotai";
 import { userIdAtom } from "../../atom";
-import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
+import fetchUserDataIfLoggedIn from "../../Utils/Fetch/fetchUserDataIfLoggedIn";
 import { useEffect, useState } from "react";
 
 import PopUp from "../PopUp";
 import PasswordConfirmation from "../PasswordConfirmation";
 import ChangePassword from "./components/ChangePassword";
 import toast from "react-hot-toast";
-import UpdateUser from "../../Utils/UpdateUser";
+import UpdateUser from "../../Utils/Update/UpdateUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");

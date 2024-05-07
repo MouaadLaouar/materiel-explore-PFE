@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import FetchAdmins from "../../../../../../Utils/FetchAdmins";
+import FetchAdmins from "../../../../../../Utils/Fetch/FetchAdmins";
 import toast from "react-hot-toast";
-import CreateDept from "../../../../../../Utils/CreateDept";
+import CreateDept from "../../../../../../Utils/Create/CreateDept";
 
 const AddDept = ({ setOpen, departments, setDepartments }) => {
   const [isLoading, setIsLoading] = useState(false);

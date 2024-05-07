@@ -1,4 +1,4 @@
-import { instance } from "../Configs/axios";
+import { instance } from "../../Configs/axios";
 
 const SignIn = async (Email, Password) => {
   try {

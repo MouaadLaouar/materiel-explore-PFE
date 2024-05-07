@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import GetDept from "../../../../../Utils/GetDept";
+import GetDept from "../../../../../Utils/Fetch/GetDept";
 
 import deptLogo from "../../../../../assets/dept2.png";
 import PopUp from "../../../../../Components/PopUp";

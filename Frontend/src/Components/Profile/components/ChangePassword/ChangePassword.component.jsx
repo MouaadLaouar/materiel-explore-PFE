@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
-import SignIn from "../../../../Utils/SignIn";
-import UpdateUser from "../../../../Utils/UpdateUser";
+import SignIn from "../../../../Utils/Authentification/SignIn";
+import UpdateUser from "../../../../Utils/Update/UpdateUser";
 import { useState } from "react";
 
 const ChangePassword = ({ setOpen, userData, setPassword }) => {

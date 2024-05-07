@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 // import Sidebar from "../../Components/Sidebar";
-import fetchUserDataIfLoggedIn from "../../Utils/fetchUserDataIfLoggedIn";
+import fetchUserDataIfLoggedIn from "../../Utils/Fetch/fetchUserDataIfLoggedIn";
 import Admin from "./Admin";
 import User from "./User";
 import { useAtom, useSetAtom } from "jotai";

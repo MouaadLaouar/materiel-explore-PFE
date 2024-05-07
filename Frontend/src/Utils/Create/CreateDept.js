@@ -1,4 +1,4 @@
-import { instance } from "../Configs/axios";
+import { instance } from "../../Configs/axios";
 
 const CreateDept = async (Dept) => {
     try {

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import FetchAllUsersData from "../../../../../Utils/FetchAllUsersData";
+import FetchAllUsersData from "../../../../../Utils/Fetch/FetchAllUsersData";
 import useFilterUsers from "../../../../../Hooks/useFilterUsers";
 import PopUp from "../../../../../Components/PopUp";
 import PasswordConfirmation from "../../../../../Components/PasswordConfirmation";
-import FetchUserById from "../../../../../Utils/FetchUserById";
+import FetchUserById from "../../../../../Utils/Fetch/FetchUserById";
 import UserInfo from "./Components/UserInfo.component";
 
 const Users = () => {

@@ -7,7 +7,7 @@ import { useSetAtom } from "jotai";
 import { userIdAtom } from "../../atom";
 
 import { VscAccount } from "react-icons/vsc";
-import signIn from "../../Utils/SignIn";
+import signIn from "../../Utils/Authentification/SignIn";
 import toast from "react-hot-toast";
 
 export default function SignIn() {

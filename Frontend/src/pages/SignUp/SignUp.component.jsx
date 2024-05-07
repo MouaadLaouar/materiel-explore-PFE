@@ -7,7 +7,7 @@ import { userIdAtom } from "../../atom";
 import { useSetAtom } from "jotai";
 
 import { FaUserGraduate } from "react-icons/fa6";
-import signUp from "../../Utils/SignUp";
+import signUp from "../../Utils/Authentification/SignUp";
 import toast from "react-hot-toast";
 
 export default function SignUp() {
