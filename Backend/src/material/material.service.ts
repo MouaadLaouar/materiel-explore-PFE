@@ -57,6 +57,9 @@ export class MaterialService {
                 where: {
                     ID: Id,
                 },
+                include: {
+                    Picture: true
+                }
             });
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
