@@ -15,6 +15,8 @@ async function bootstrap() {
         }),
     );
 
+    // app.useStaticAssets(join(__dirname, '..', 'uploads'));
+
     await app.listen(PORT, () => {
       Logger.log(`Your NestJS app is live at http://localhost:${PORT} !`)
     });

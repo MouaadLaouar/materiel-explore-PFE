@@ -21,9 +21,9 @@ export class MaterialService {
         }
     }
 
-    async CreateMaterial(Material: MaterialDto) {
+    async CreateMaterial(Material: MaterialDto, PictureName: string) {
         try {
-            return await this.prisma.material.create({
+            const material = await this.prisma.material.create({
                 data: {
                     Name: Material.Name,
                     Description: Material.Description,
@@ -32,6 +32,17 @@ export class MaterialService {
                     },
                 },
             });
+
+            const picture = await this.prisma.picture.create({
+                data: {
+                    Name: PictureName,
+                    MaterialID: material.ID
+                }
+            })
+
+            return {
+                material, picture
+            }
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
                 cause: new Error(error),

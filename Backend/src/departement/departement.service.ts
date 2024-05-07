@@ -7,7 +7,17 @@ export class DepartementService {
     constructor(private prisma: PrismaService) {}
 
     async GetAll() {
-        return await this.prisma.departement.findMany();
+        return await this.prisma.departement.findMany({
+            include: {
+                Admin: {
+                    select: {
+                        FirstName: true,
+                        LastName: true,
+                        Email: true
+                    }
+                }
+            }
+        });
     }
 
     async CreateDept(Data: DeptDto) {

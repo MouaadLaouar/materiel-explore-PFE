@@ -40,10 +40,10 @@ export class MaterialController {
         fileFilter: imageFileFilter
     }))
     CreateMaterial(@Body() Data: MaterialDto, @UploadedFile() file: Express.Multer.File) {
-        // return this.materialService.CreateMaterial(Data);
-        console.log('Data => ', Data.Name);
-        console.log('File => ', file);
-        return 'OK';
+        console.log('Data => ', Data);
+        console.log('File => ', file.filename);
+        return this.materialService.CreateMaterial(Data, file.filename);
+        // return 'OK';
     }
 
     @Get(':id')

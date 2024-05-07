@@ -6,7 +6,13 @@ import { MaterialModule } from './material/material.module';
 import { DepartementModule } from './departement/departement.module';
 
 @Module({
-    imports: [ConfigModule.forRoot({ isGlobal: true }), AuthModule, UsersModule, MaterialModule, DepartementModule],
+    imports: [
+        ConfigModule.forRoot({ isGlobal: true }),
+        AuthModule,
+        UsersModule,
+        MaterialModule,
+        DepartementModule
+    ],
     controllers: [],
     providers: [],
 })

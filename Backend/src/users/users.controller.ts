@@ -1,26 +1,44 @@
-import { Body, Controller, Get, HttpCode, Param, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/Guards/auth.guard';
 import { UsersService } from './users.service';
-import { UpdateUserDto } from './dto/create.user.dto';
+import { UpdateUserDto, RoleDto } from './dto/create.user.dto';
 
 @Controller('users')
 @UseGuards(AuthGuard)
 export class UsersController {
     constructor(private usersService: UsersService) {}
-
     @Get('')
     GetAll() {
         return this.usersService.GetAll();
     }
 
+    @Get('phd')
+    GetUsers() {
+        return this.usersService.GetUsers();
+    }
+
+    @Get('admin')
+    GetAdmin() {
+        return this.usersService.GetAdmin();
+    }
+
+    @Get('phdandadmin')
+    GetUsersAndAdmin() {
+        return this.usersService.GetUsersAndAdmin();
+    }
+
     @Get(':id')
-    @HttpCode(200)
     GetUserById(@Param() params: any) {
         return this.usersService.GetUserById(params.id)
     }
 
     @Put(':id')
-    UpdateUser(@Param() pramas: any, @Body() Data: UpdateUserDto) {
+    UpdateUser(@Param() params: any, @Body() Data: UpdateUserDto) {
         return this.usersService.UpdateUser(Data);
+    }
+
+    @Post('UpdateRole/:id')
+    UpdateRole(@Param() params: any, @Body() Data: RoleDto) {
+        return this.UpdateRole(params.id, Data)
     }
 }

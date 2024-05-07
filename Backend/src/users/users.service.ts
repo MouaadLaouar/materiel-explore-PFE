@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { CreateUserDto, UpdateUserDto } from './dto/create.user.dto';
+import { CreateUserDto, RoleDto, UpdateUserDto } from './dto/create.user.dto';
 import { Prisma } from '@prisma/client';
 
 export type User = any;
@@ -21,6 +21,57 @@ export class UsersService {
                 CreatedAt: true,
             },
         });
+    }
+
+    async GetUsers() {
+        return this.prisma.user.findMany({
+            where: {
+                Role: 'USER'
+            },
+            select: {
+                ID: true,
+                FirstName: true,
+                LastName: true,
+                Email: true,
+                Phone: true,
+                Role: true,
+                CreatedAt: true,
+            },
+        })
+    }
+
+    async GetAdmin() {
+        return this.prisma.user.findMany({
+            where: {
+                Role: 'ADMIN'
+            },
+            select: {
+                ID: true,
+                FirstName: true,
+                LastName: true,
+                Email: true,
+                Phone: true,
+                Role: true,
+                CreatedAt: true,
+            },
+        })
+    }
+
+    async GetUsersAndAdmin() {
+        return this.prisma.user.findMany({
+            where: {
+                Role: 'USER' || 'ADMIN'
+            },
+            select: {
+                ID: true,
+                FirstName: true,
+                LastName: true,
+                Email: true,
+                Phone: true,
+                Role: true,
+                CreatedAt: true,
+            },
+        })
     }
 
     async findOne(Email: string) {
@@ -102,5 +153,16 @@ export class UsersService {
         const { Password, ...result } = user;
 
         return result;
+    }
+
+    async UpdateRole(ID: string, Data: RoleDto) {
+        this.prisma.user.update({
+            where: {
+                ID: ID
+            },
+            data: {
+                Role: Data.Role
+            }
+        })
     }
 }

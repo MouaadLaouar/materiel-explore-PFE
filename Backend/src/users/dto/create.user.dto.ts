@@ -32,3 +32,8 @@ export class UpdateUserDto extends CreateUserDto {
     @IsString()
     Id: string;
 }
+
+export class RoleDto {
+    @IsString()
+    Role: 'USER' | 'ADMIN' | 'SUPERADMIN';
+}
