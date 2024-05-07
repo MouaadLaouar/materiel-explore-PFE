@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/Guards/auth.guard';
 import { UsersService } from './users.service';
 import { UpdateUserDto, RoleDto } from './dto/create.user.dto';
@@ -37,7 +37,7 @@ export class UsersController {
         return this.usersService.UpdateUser(Data);
     }
 
-    @Post('UpdateRole/:id')
+    @Put('UpdateRole/:id')
     UpdateRole(@Param() params: any, @Body() Data: RoleDto) {
         return this.UpdateRole(params.id, Data)
     }
