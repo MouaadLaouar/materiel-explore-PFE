@@ -1,65 +1,14 @@
 import { useEffect, useState } from "react";
 import GetDept from "../../../../../Utils/GetDept";
 
-// const people = [
-//   {
-//     name: "Leslie Alexander",
-//     email: "leslie.alexander@example.com",
-//     role: "Co-Founder / CEO",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: "3h ago",
-//     lastSeenDateTime: "2023-01-23T13:23Z",
-//   },
-//   {
-//     name: "Michael Foster",
-//     email: "michael.foster@example.com",
-//     role: "Co-Founder / CTO",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: "3h ago",
-//     lastSeenDateTime: "2023-01-23T13:23Z",
-//   },
-//   {
-//     name: "Dries Vincent",
-//     email: "dries.vincent@example.com",
-//     role: "Business Relations",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: null,
-//   },
-//   {
-//     name: "Lindsay Walton",
-//     email: "lindsay.walton@example.com",
-//     role: "Front-end Developer",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: "3h ago",
-//     lastSeenDateTime: "2023-01-23T13:23Z",
-//   },
-//   {
-//     name: "Courtney Henry",
-//     email: "courtney.henry@example.com",
-//     role: "Designer",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: "3h ago",
-//     lastSeenDateTime: "2023-01-23T13:23Z",
-//   },
-//   {
-//     name: "Tom Cook",
-//     email: "tom.cook@example.com",
-//     role: "Director of Product",
-//     imageUrl:
-//       "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-//     lastSeen: null,
-//   },
-// ];
-
 import deptLogo from "../../../../../assets/dept2.png";
+import PopUp from "../../../../../Components/PopUp";
+import AddDept from "./Components/AddDept.component";
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
+  const [open, setOpen] = useState(false);
+
   const getDepartments = async () => {
     try {
       const data = await GetDept();
@@ -69,7 +18,6 @@ export default function Departments() {
     }
   };
 
-
   useEffect(() => {
     getDepartments();
   }, []);
@@ -78,10 +26,19 @@ export default function Departments() {
       <h1 className="my-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Departments List
       </h1>
+      <button
+        type="button"
+        className="inline-flex w-full justify-center rounded-md bg-teal-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-teal-500 sm:ml-3 sm:w-auto"
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Add Department
+      </button>{" "}
       <ul role="list" className="divide-y divide-gray-100">
         {departments.map((dept) => (
           <li
-            key={dept.Email}
+            key={dept.ID}
             className="flex  justify-between gap-x-6 py-5 px-8"
           >
             <div className="flex items-center min-w-0 gap-x-4">
@@ -96,7 +53,12 @@ export default function Departments() {
                 </p>
                 <p className="mt-1 truncate text-sm font-mdMed leading-5 text-black">
                   <b className="text-sky-700">Email : </b>
-                  <a className="hover:text-sky-700" href={`mailto:${dept.Email}`}>{dept.Email}</a>
+                  <a
+                    className="hover:text-sky-700"
+                    href={`mailto:${dept.Email}`}
+                  >
+                    {dept.Email}
+                  </a>
                 </p>
                 <p className="mt-1 truncate text-sm font-mdMed leading-5 text-black">
                   <b className="text-sky-700">Phone : </b>
@@ -125,6 +87,13 @@ export default function Departments() {
           </li>
         ))}
       </ul>
+      <PopUp open={open} setOpen={setOpen}>
+        <AddDept
+          setOpen={setOpen}
+          setDepartments={setDepartments}
+          departments={departments}
+        />
+      </PopUp>
     </>
   );
 }
