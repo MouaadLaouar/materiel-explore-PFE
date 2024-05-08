@@ -8,7 +8,7 @@ import FetchAdmins from "../../../../../../Utils/Fetch/FetchAdmins";
 import toast from "react-hot-toast";
 import CreateDept from "../../../../../../Utils/Create/CreateDept";
 
-const AddDept = ({ setOpen, departments, setDepartments }) => {
+const AddDept = ({ setOpen, getDepartments }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [admins, setAdmins] = useState([]);
 
@@ -44,15 +44,15 @@ const AddDept = ({ setOpen, departments, setDepartments }) => {
   const handleFormSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const response = await CreateDept({
+      await CreateDept({
         Name: data.deptName,
         Email: data.deptEmail,
         Phone: data.deptPhone,
         Admin: data.admin,
+      }).then(() => {
+        getDepartments();
       });
-      setDepartments([...departments, response]);
       toast.success("Department Added Successfully");
-      console.log(response);
       setIsLoading(false);
       setOpen(false);
     } catch (error) {
