@@ -22,7 +22,6 @@ import { imageFileFilter } from 'src/utils/imageFileFilter';
 @Controller('materials')
 @UseGuards(AuthGuard)
 export class MaterialController {
-
     constructor(private materialService: MaterialService) {}
 
     @Get('')
@@ -32,13 +31,15 @@ export class MaterialController {
 
     // FIXME: still working on this
     @Post('')
-    @UseInterceptors(FileInterceptor('file', {
-        storage: diskStorage({
-            destination: './upload',
-            filename: editFileName
+    @UseInterceptors(
+        FileInterceptor('file', {
+            storage: diskStorage({
+                destination: './upload',
+                filename: editFileName,
+            }),
+            fileFilter: imageFileFilter,
         }),
-        fileFilter: imageFileFilter
-    }))
+    )
     CreateMaterial(@Body() Data: MaterialDto, @UploadedFile() file: Express.Multer.File) {
         console.log('Data => ', Data);
         console.log('File => ', file.filename);
@@ -59,5 +60,10 @@ export class MaterialController {
     @Delete(':id')
     DeleteMaterial(@Param() params: any) {
         return this.materialService.DeleteMaterial(params.id);
+    }
+
+    @Get('department/:id')
+    GetByDeptId(@Param() params: any) {
+        return this.materialService.GetByDeptId(params.id);
     }
 }

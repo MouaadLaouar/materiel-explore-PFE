@@ -10,8 +10,8 @@ export class MaterialService {
         try {
             return await this.prisma.material.findMany({
                 include: {
-                    Picture: true
-                }
+                    Picture: true,
+                },
             });
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
@@ -36,13 +36,14 @@ export class MaterialService {
             const picture = await this.prisma.picture.create({
                 data: {
                     Name: PictureName,
-                    MaterialID: material.ID
-                }
-            })
+                    MaterialID: material.ID,
+                },
+            });
 
             return {
-                material, picture
-            }
+                material,
+                picture,
+            };
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
                 cause: new Error(error),
@@ -58,8 +59,8 @@ export class MaterialService {
                     ID: Id,
                 },
                 include: {
-                    Picture: true
-                }
+                    Picture: true,
+                },
             });
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
@@ -96,6 +97,28 @@ export class MaterialService {
             return await this.prisma.material.delete({
                 where: {
                     ID: Id,
+                },
+            });
+        } catch (error) {
+            throw new BadRequestException('Something bad happened', {
+                cause: new Error(error),
+                description: 'Some error description',
+            });
+        }
+    }
+    async GetByDeptId(Id: string) {
+        try {
+            return await this.prisma.material.findMany({
+                where: {
+                    DepartementId: Id,
+                },
+                include: {
+                    Picture: {
+                        select: {
+                            ID: true,
+                            Name: true,
+                        },
+                    },
                 },
             });
         } catch (error) {

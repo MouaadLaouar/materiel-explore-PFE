@@ -43,7 +43,10 @@ export class UsersService {
     async GetAdmin() {
         return this.prisma.user.findMany({
             where: {
-                Role: 'ADMIN'
+                Role: 'ADMIN',
+                Departement: {
+                    none: {},
+                },
             },
             select: {
                 ID: true,
@@ -54,7 +57,7 @@ export class UsersService {
                 Role: true,
                 CreatedAt: true,
             },
-        })
+        });
     }
 
     async GetUsersAndAdmin() {
