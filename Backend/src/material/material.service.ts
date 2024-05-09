@@ -10,6 +10,11 @@ export class MaterialService {
         try {
             return await this.prisma.material.findMany({
                 include: {
+                    Departement: {
+                        select: {
+                            Name: true,
+                        },
+                    },
                     Picture: true,
                 },
             });
