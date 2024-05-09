@@ -80,7 +80,7 @@ export default function NavBar() {
                           item.href === location.pathname
                             ? "bg-teal-700 text-white"
                             : "text-black hover:bg-teal-600 hover:text-white",
-                          "rounded-md px-3 py-2 text-sm font-medium"
+                          "rounded-md px-3 py-2 text-sm font-medium hover:cursor-pointer"
                         )}
                         aria-current={item.current ? "page" : undefined}
                         onClick={() => {
@@ -183,7 +183,7 @@ export default function NavBar() {
                     item.href === location.pathname
                       ? "bg-teal-700 text-white"
                       : "text-black hover:bg-teal-600 hover:text-white ",
-                    "block rounded-md px-3 py-2 text-base font-medium "
+                    "block rounded-md px-3 py-2 text-base font-medium hover:cursor-pointer"
                   )}
                   aria-current={item.current ? "page" : undefined}
                   onClick={() => {
@@ -197,7 +197,7 @@ export default function NavBar() {
             </div>
             {open && (
               <Disclosure.Button>
-                <div className="fixed top-16 inset-0 z-30 bg-gray-900 bg-opacity-50 "></div>
+                <div className="fixed hover:cursor-default top-16 inset-0 z-30 bg-gray-900 bg-opacity-50 "></div>
               </Disclosure.Button>
             )}
           </Disclosure.Panel>
