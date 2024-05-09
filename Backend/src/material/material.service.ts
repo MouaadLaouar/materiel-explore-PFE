@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { MaterialDto, UpdateMaterialDto } from './dto/create.material.dto';
 
@@ -99,11 +99,32 @@ export class MaterialService {
 
     async DeleteMaterial(Id: string) {
         try {
-            return await this.prisma.material.delete({
+            const material = await this.prisma.material.findUnique({
                 where: {
                     ID: Id,
                 },
+                include: {
+                    Picture: true,
+                },
             });
+
+            if (material) {
+                if (material.Picture) {
+                    await this.prisma.picture.delete({
+                        where: {
+                            ID: material.Picture[0].ID,
+                        },
+                    });
+                }
+
+                return await this.prisma.material.delete({
+                    where: {
+                        ID: Id,
+                    },
+                });
+            } else {
+                throw new NotFoundException('Material not found');
+            }
         } catch (error) {
             throw new BadRequestException('Something bad happened', {
                 cause: new Error(error),
@@ -111,6 +132,7 @@ export class MaterialService {
             });
         }
     }
+
     async GetByDeptId(Id: string) {
         try {
             return await this.prisma.material.findMany({
