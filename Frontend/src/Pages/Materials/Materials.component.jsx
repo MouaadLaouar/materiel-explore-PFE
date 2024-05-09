@@ -66,7 +66,7 @@ const Materials = () => {
           </div> */}
 
           {/* Filter */}
-          <div className="mt-4 mb-12 mx-auto w-2/3 flex gap-8 font-outfit">
+          <div className="mt-4 mb-12 mx-auto w-2/3 sm:flex  gap-8 font-outfit">
             {/* Search By Name Filter */}
             <input
               type="text"
@@ -78,7 +78,7 @@ const Materials = () => {
 
             {/* Select Dept Filter */}
             <select
-              className=" w-36 border rounded px-2 py-1 focus:outline-none focus:ring-teal-600 focus:border-teal-500 sm:text-sm"
+              className=" w-full border rounded px-2 py-1 sm:mt-0 sm:w-36 mt-8 focus:outline-none focus:ring-teal-600 focus:border-teal-500 sm:text-sm"
               //   value={roleFilter}
               //   onChange={handleRoleChange}
             >
