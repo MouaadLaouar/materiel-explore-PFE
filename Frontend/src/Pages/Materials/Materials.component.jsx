@@ -115,6 +115,7 @@ const Materials = () => {
               <div className="max-w-full min-h-full bg-white border border-gray-200 rounded-lg shadow ">
                 <a href="#">
                   <img
+                    loading="lazy"
                     className="rounded-t-lg"
                     src={`${Constants.BasedPictureUrl}/${material.Picture[0].Name}`}
                     alt=""
