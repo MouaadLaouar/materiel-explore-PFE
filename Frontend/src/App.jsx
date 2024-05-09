@@ -10,6 +10,7 @@ import NotFound from "./Pages/NotFound";
 import Contact from "./Pages/Contact";
 import Dashboard from "./Pages/Dashboard";
 import { Toaster } from "react-hot-toast";
+import Materials from "./Pages/Materials/Materials.component";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <Route path="SignIn" element={<SignIn />} />
           <Route path="SignUp" element={<SignUp />} />
           <Route path="Contact" element={<Contact />} />
+          <Route path="Materials" element={<Materials />} />
           <Route path="Dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
