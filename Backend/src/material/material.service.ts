@@ -1,6 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
 import { MaterialDto, UpdateMaterialDto } from './dto/create.material.dto';
+import { unlinkSync } from 'fs';
+import { join } from 'path';
+
 
 @Injectable()
 export class MaterialService {
@@ -115,6 +118,10 @@ export class MaterialService {
                             ID: material.Picture[0].ID,
                         },
                     });
+
+                    // Delete the file from the upload folder
+                    const filePath = join(process.cwd(), 'upload', material.Picture[0].Name);
+                    unlinkSync(filePath);
                 }
 
                 return await this.prisma.material.delete({
@@ -132,6 +139,42 @@ export class MaterialService {
             });
         }
     }
+
+    // async DeleteMaterial(Id: string) {
+    //     try {
+    //         const material = await this.prisma.material.findUnique({
+    //             where: {
+    //                 ID: Id,
+    //             },
+    //             include: {
+    //                 Picture: true,
+    //             },
+    //         });
+
+    //         if (material) {
+    //             if (material.Picture) {
+    //                 await this.prisma.picture.delete({
+    //                     where: {
+    //                         ID: material.Picture[0].ID,
+    //                     },
+    //                 });
+    //             }
+
+    //             return await this.prisma.material.delete({
+    //                 where: {
+    //                     ID: Id,
+    //                 },
+    //             });
+    //         } else {
+    //             throw new NotFoundException('Material not found');
+    //         }
+    //     } catch (error) {
+    //         throw new BadRequestException('Something bad happened', {
+    //             cause: new Error(error),
+    //             description: 'Some error description',
+    //         });
+    //     }
+    // }
 
     async GetByDeptId(Id: string) {
         try {
