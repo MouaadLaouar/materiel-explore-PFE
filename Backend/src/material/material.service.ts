@@ -4,7 +4,6 @@ import { MaterialDto, UpdateMaterialDto } from './dto/create.material.dto';
 import { unlinkSync } from 'fs';
 import { join } from 'path';
 
-
 @Injectable()
 export class MaterialService {
     constructor(private prisma: PrismaService) {}
@@ -113,9 +112,9 @@ export class MaterialService {
 
             if (material) {
                 if (material.Picture) {
-                    await this.prisma.picture.delete({
+                    await this.prisma.picture.deleteMany({
                         where: {
-                            ID: material.Picture[0].ID,
+                            MaterialID: material.ID,
                         },
                     });
 

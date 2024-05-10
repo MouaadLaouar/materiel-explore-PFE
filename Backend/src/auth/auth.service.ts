@@ -10,11 +10,11 @@ export class AuthService {
     async signIn(Email: string, pass: string) {
         const user = await this.usersService.findOne(Email);
 
-        const isMatch = await bcrypt.compare(pass, user?.Password);
-
         if (!user) {
-            throw new NotFoundException();
+            throw new NotFoundException("User doesn't exist");
         }
+
+        const isMatch = await bcrypt.compare(pass, user?.Password);
 
         if (!isMatch) {
             throw new UnauthorizedException();

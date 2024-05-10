@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException } from '@
 import { PrismaService } from 'src/prisma.service';
 import { CreateUserDto, RoleDto, UpdateUserDto } from './dto/create.user.dto';
 import { Prisma } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
 
 export type User = any;
 
@@ -26,7 +27,7 @@ export class UsersService {
     async GetUsers() {
         return this.prisma.user.findMany({
             where: {
-                Role: 'USER'
+                Role: 'USER',
             },
             select: {
                 ID: true,
@@ -37,7 +38,7 @@ export class UsersService {
                 Role: true,
                 CreatedAt: true,
             },
-        })
+        });
     }
 
     async GetAdmin() {
@@ -63,7 +64,7 @@ export class UsersService {
     async GetUsersAndAdmin() {
         return this.prisma.user.findMany({
             where: {
-                Role: 'USER' || 'ADMIN'
+                Role: 'USER' || 'ADMIN',
             },
             select: {
                 ID: true,
@@ -74,7 +75,7 @@ export class UsersService {
                 Role: true,
                 CreatedAt: true,
             },
-        })
+        });
     }
 
     async findOne(Email: string) {
@@ -113,6 +114,8 @@ export class UsersService {
 
     async UpdateUser(Data: UpdateUserDto) {
         // TODO: Need to be rethink
+        const saltOrRounds = 10;
+        const hashedPassword = await bcrypt.hash(Data.Password, saltOrRounds);
         try {
             return this.prisma.user.update({
                 where: {
@@ -123,7 +126,7 @@ export class UsersService {
                     LastName: Data.LastName,
                     Email: Data.Email,
                     Phone: Data.Phone,
-                    Password: Data.Password,
+                    Password: hashedPassword,
                     Role: Data.Role,
                 },
             });
@@ -161,11 +164,11 @@ export class UsersService {
     async UpdateRole(ID: string, Data: RoleDto) {
         return await this.prisma.user.update({
             where: {
-                ID: ID
+                ID: ID,
             },
             data: {
-                Role: Data.Role
-            }
-        })
+                Role: Data.Role,
+            },
+        });
     }
 }

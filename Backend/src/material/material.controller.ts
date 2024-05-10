@@ -42,7 +42,7 @@ export class MaterialController {
     )
     CreateMaterial(@Body() Data: MaterialDto, @UploadedFile() file: Express.Multer.File) {
         console.log('Data => ', Data);
-        console.log('File => ', file.filename);
+        console.log('File => ', file);
         return this.materialService.CreateMaterial(Data, file.filename);
         // return 'OK';
     }
