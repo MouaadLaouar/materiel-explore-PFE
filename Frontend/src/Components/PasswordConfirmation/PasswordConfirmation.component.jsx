@@ -20,7 +20,7 @@ const PasswordConfirmation = ({
           setOpen(false);
           setTimeout(() => {
             setIsPasswordCorrect(false);
-          }, 2000);
+          }, 1000);
         } else {
           toast.error("Wrong Password");
         }
@@ -45,7 +45,7 @@ const PasswordConfirmation = ({
             <div className="mt-2">
               <p className="text-sm text-gray-500">
                 For Security Reasons , You need To Write Your Password Below To
-                Modify Your Informations
+                Perform This Action
               </p>
             </div>
           </div>
