@@ -73,6 +73,9 @@ const AddDept = ({ setOpen, getDepartments }) => {
             <h3 className="text-base font-semibold leading-6 text-gray-900">
               Add New Department
             </h3>
+            <p className="text-sm text-gray-500">
+              Fill The Form To Add A New Department To The System
+            </p>
           </div>
         </div>
       </div>

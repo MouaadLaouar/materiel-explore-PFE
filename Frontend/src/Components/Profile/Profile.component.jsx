@@ -95,7 +95,7 @@ const Profile = () => {
         </h2>
       </div>
 
-      <span className="block text-sm font-medium leading-6  text-center mt-10">
+      <span className="block text-sm w-[85%] sm:w-full font-mdSemi leading-6  text-center mt-10 mx-auto">
         Here&apos;s Your Account Informations , To Modify You Should{" "}
         <a
           className="text-teal-600 hover:cursor-pointer hover:text-teal-500"
@@ -108,7 +108,7 @@ const Profile = () => {
         </a>
       </span>
 
-      <div className="mb-40 mt-10 sm:mx-auto sm:w-3/4 pr-20">
+      <div className="mb-40 mt-10 mx-auto w-[85%] sm:w-3/4 ">
         <form className="space-y-6 " onSubmit={handleFormSubmit}>
           {/* First Name */}
           <div>
@@ -216,7 +216,7 @@ const Profile = () => {
             </div>
           </div>
 
-          <span className="block text-sm font-medium leading-6  text-start  ">
+          <span className="block text-xs sm:text-sm font-mdSemi leading-6  text-start  ">
             To Change Your Password{" "}
             <a
               className="text-teal-600 hover:cursor-pointer hover:text-teal-500"
