@@ -48,7 +48,7 @@ export default function Departments() {
     }
   };
 
-  console.log(isPasswordCorrect);
+  // console.log(isPasswordCorrect);
 
   const getActualUserData = async () => {
     try {
@@ -87,7 +87,7 @@ export default function Departments() {
         {departments.map((dept) => (
           <li
             key={dept.ID}
-            className="relative flex justify-between gap-x-24 py-5 px-8"
+            className="relative hover:bg-gray-100 flex justify-between gap-x-24 py-5 px-8"
           >
             <div className="flex items-center min-w-0 gap-x-4">
               <img

@@ -44,17 +44,22 @@ const AddDept = ({ setOpen, getDepartments }) => {
   const handleFormSubmit = async (data) => {
     setIsLoading(true);
     try {
-      await CreateDept({
+      const res = await CreateDept({
         Name: data.deptName,
         Email: data.deptEmail,
         Phone: data.deptPhone,
         Admin: data.admin,
-      }).then(() => {
-        getDepartments();
       });
-      toast.success("Department Added Successfully");
-      setIsLoading(false);
-      setOpen(false);
+      if (!res.ID) {
+        toast.error("This Email Already Exists");
+        setIsLoading(false);
+        return;
+      } else {
+        getDepartments();
+        toast.success("Department Added Successfully");
+        setIsLoading(false);
+        setOpen(false);
+      }
     } catch (error) {
       console.error(error);
       toast.error(error);
