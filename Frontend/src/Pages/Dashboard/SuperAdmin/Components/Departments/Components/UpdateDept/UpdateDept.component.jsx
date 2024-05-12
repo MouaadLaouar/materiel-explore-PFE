@@ -1,33 +1,42 @@
 /* eslint-disable react/prop-types */
-import { FaBuilding } from "react-icons/fa";
-import { useForm } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import FetchAdmins from "../../../../../../Utils/Fetch/FetchAdmins";
 import toast from "react-hot-toast";
-import CreateDept from "../../../../../../Utils/Create/CreateDept";
+import { RxUpdate } from "react-icons/rx";
+import UpdateDepartment from "../../../../../../../Utils/Update/UpdateDepartment";
+import FetchAdmins from "../../../../../../../Utils/Fetch/FetchAdmins";
 
-const AddDept = ({ setOpen, getDepartments }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const UpdateDept = ({
+  setOpen,
+  selectedDept,
+  getDepartments,
+  setIsPasswordCorrect,
+  setPassword,
+}) => {
   const [admins, setAdmins] = useState([]);
 
-  const schema = yup.object().shape({
-    deptName: yup.string().required("The Name Is Required"),
-    deptEmail: yup.string().required("The Email Is Required"),
-    deptPhone: yup
-      .string()
-      .required("The Phone Number Is Required")
-      .matches(/^\d{10}$/, "Phone Number must be 10 digits"),
-    admin: yup.string().required("Please select an Admin"),
+  const [dept, setDept] = useState({
+    Id: selectedDept.ID,
+    Name: selectedDept.Name,
+    Email: selectedDept.Email,
+    Phone: selectedDept.Phone,
+    Admin: selectedDept.UserId,
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
-
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setDept((prevDeptData) => ({
+      ...prevDeptData,
+      [name]: value,
+    }));
+  };
+  const isUserDataEmpty = () => {
+    for (let key in dept) {
+      if (dept[key] === "") {
+        return true;
+      }
+    }
+    return false;
+  };
   const FetchAllAdmins = async () => {
     try {
       const response = await FetchAdmins();
@@ -36,34 +45,27 @@ const AddDept = ({ setOpen, getDepartments }) => {
       console.error(error);
     }
   };
-
   useEffect(() => {
     FetchAllAdmins();
   }, []);
 
-  const handleFormSubmit = async (data) => {
-    setIsLoading(true);
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
     try {
-      const res = await CreateDept({
-        Name: data.deptName,
-        Email: data.deptEmail,
-        Phone: data.deptPhone,
-        Admin: data.admin,
-      });
-      if (!res.ID) {
-        toast.error("This Email Already Exists");
-        setIsLoading(false);
-        return;
-      } else {
+      if (!isUserDataEmpty()) {
+        const res = await UpdateDepartment(dept);
+        toast.success("Department Updated Successfully");
+        console.log(res);
         getDepartments();
-        toast.success("Department Added Successfully");
-        setIsLoading(false);
         setOpen(false);
+        setIsPasswordCorrect(true);
+        setPassword("");
+      } else {
+        toast.error("Fill All The Fields");
       }
     } catch (error) {
       console.error(error);
-      toast.error(error);
-      setIsLoading(false);
+      toast.error("An Error Occured");
     }
   };
 
@@ -71,25 +73,25 @@ const AddDept = ({ setOpen, getDepartments }) => {
     <>
       <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
         <div className="sm:flex sm:items-center">
-          <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-teal-100 sm:mx-0 sm:h-10 sm:w-10">
-            <FaBuilding className="h-6 w-6 text-teal-700" aria-hidden="true" />
+          <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-sky-100 sm:mx-0 sm:h-10 sm:w-10">
+            <RxUpdate className="h-6 w-6 text-sky-700" aria-hidden="true" />
           </div>
           <div className="mt-3  text-center sm:ml-4 sm:mt-0 sm:text-left">
             <h3 className="text-base font-semibold leading-6 text-gray-900">
-              Add New Department
+              Update Department
             </h3>
             <p className="text-sm text-gray-500">
-              Fill The Form To Add A New Department To The System
+              Update Previous Information For This Department Here
             </p>
           </div>
         </div>
       </div>
-      <form onSubmit={handleSubmit(handleFormSubmit)}>
+      <form onSubmit={handleFormSubmit}>
         {/* Name */}
         <div className="my-5">
           <div className="flex items-center justify-between">
             <label
-              htmlFor="OldPassword"
+              htmlFor="deptName"
               className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
             >
               Department Name
@@ -98,24 +100,21 @@ const AddDept = ({ setOpen, getDepartments }) => {
           <div className="mt-2">
             <input
               id="deptName"
-              name="deptName"
+              name="Name"
               type="text"
-              autoComplete="current-password"
-              disabled={isLoading}
-              {...register("deptName")}
+              value={dept.Name}
+              onChange={handleInputChange}
               className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
-            {errors.deptName?.message}
-          </span>
+          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
         </div>
 
         {/* Email */}
         <div className="my-5">
           <div className="flex items-center justify-between">
             <label
-              htmlFor="NewPassword"
+              htmlFor="deptEmail"
               className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
             >
               Email
@@ -124,33 +123,28 @@ const AddDept = ({ setOpen, getDepartments }) => {
           <div className="mt-2">
             <input
               id="deptEmail"
-              name="deptEmail"
+              name="Email"
               type="email"
-              autoComplete="current-password"
-              disabled={isLoading}
-              {...register("deptEmail")}
+              value={dept.Email}
+              onChange={handleInputChange}
               className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
-            {errors.deptEmail?.message}
-          </span>
+          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
         </div>
 
         {/* Admin */}
         <div className="my-5">
           <div className="flex items-center justify-between">
-            <label
-              htmlFor="ConfirmNewPassword"
-              className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
-            >
+            <label className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900">
               Admin
             </label>
           </div>
           <div className="mt-2">
             <select
-              disabled={isLoading}
-              {...register("admin")}
+              name="Admin"
+              value={dept.Admin}
+              onChange={handleInputChange}
               className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             >
               <option value="">Select Admin</option>
@@ -163,16 +157,14 @@ const AddDept = ({ setOpen, getDepartments }) => {
             </select>
           </div>
 
-          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
-            {errors.admin?.message}
-          </span>
+          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
         </div>
 
         {/* Phone Number */}
         <div className="my-5">
           <div className="flex items-center justify-between">
             <label
-              htmlFor="ConfirmNewPassword"
+              htmlFor="deptPhone"
               className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
             >
               Phone
@@ -181,17 +173,14 @@ const AddDept = ({ setOpen, getDepartments }) => {
           <div className="mt-2">
             <input
               id="deptPhone"
-              name="deptPhone"
+              name="Phone"
               type="text"
-              autoComplete="current-password"
-              disabled={isLoading}
-              {...register("deptPhone")}
+              value={dept.Phone}
+              onChange={handleInputChange}
               className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
-          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3">
-            {errors.deptPhone?.message}
-          </span>
+          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
         </div>
 
         {/* Form Buttons (Submit and Cancel) */}
@@ -215,4 +204,4 @@ const AddDept = ({ setOpen, getDepartments }) => {
   );
 };
 
-export default AddDept;
+export default UpdateDept;

@@ -1,6 +1,6 @@
 import { instance } from "../../Configs/axios";
 
-const DeleteDept = async (ID) => {
+const DeleteDepartment = async (ID) => {
     try {
         const res = await instance.delete(`/departement/${ID}`);
         return res.data;
@@ -9,4 +9,4 @@ const DeleteDept = async (ID) => {
     }
 }
 
-export default DeleteDept;
+export default DeleteDepartment;

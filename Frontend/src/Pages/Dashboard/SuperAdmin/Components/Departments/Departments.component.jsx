@@ -2,16 +2,18 @@ import { useEffect, useState } from "react";
 import GetDept from "../../../../../Utils/Fetch/GetDept";
 import { MdOutlineClose } from "react-icons/md";
 import deptLogo from "../../../../../assets/dept4.png";
-import PopUp from "../../../../../Components/PopUp";
-import AddDept from "./Components/AddDept.component";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import toast from "react-hot-toast";
-import DeleteDept from "../../../../../Utils/Delete/DeleteDept";
 import FetchUserById from "../../../../../Utils/Fetch/FetchUserById";
 import PasswordConfirmation from "../../../../../Components/PasswordConfirmation";
+import PopUp from "../../../../../Components/PopUp";
+import AddDept from "./Components/AddDept";
+import UpdateDept from "./Components/UpdateDept";
+import DeleteDept from "./Components/DeleteDept/DeleteDept.component";
 
 export default function Departments() {
   const [departments, setDepartments] = useState([]);
+  const [selectedDept, setSelectedDept] = useState("");
+
   const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
   const [password, setPassword] = useState("");
   const [myEmail, setMyEmail] = useState("");
@@ -19,42 +21,20 @@ export default function Departments() {
   const [open, setOpen] = useState(false);
   const [page, setPage] = useState("");
 
-  const getDepartments = async () => {
-    try {
-      const data = await GetDept();
-      setDepartments(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const deleteDepartment = async (id) => {
-    try {
-      if (!isPasswordCorrect) {
-        const response = await DeleteDept(id);
-        if (response.ID) {
-          toast.success("Department Deleted Successfully");
-          getDepartments();
-          setIsPasswordCorrect(true);
-        } else {
-          toast.error(response.message);
-        }
-      } else {
-        toast.error("Enter Your Password First");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error(error);
-    }
-  };
-
-  // console.log(isPasswordCorrect);
-
   const getActualUserData = async () => {
     try {
       const ID = localStorage.getItem("userID");
       const response = await FetchUserById(ID);
       setMyEmail(response.Email);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getDepartments = async () => {
+    try {
+      const data = await GetDept();
+      setDepartments(data);
     } catch (error) {
       console.error(error);
     }
@@ -86,6 +66,16 @@ export default function Departments() {
       <ul role="list" className="divide-y divide-gray-200 ">
         {departments.map((dept) => (
           <li
+            onClick={() => {
+              if (!isPasswordCorrect) {
+                setSelectedDept(dept);
+                setOpen(true);
+                setPage("updateDept");
+              } else {
+                setOpen(true);
+                setPage("ConfirmPass");
+              }
+            }}
             key={dept.ID}
             className="relative hover:bg-gray-100 flex justify-between gap-x-24 py-5 px-8"
           >
@@ -102,8 +92,11 @@ export default function Departments() {
                 <p className="mt-1 truncate text-sm font-mdMed leading-5 text-black">
                   <b className="text-teal-600">Email : </b>
                   <a
-                    className="hover:text-sky-700"
+                    className="hover:text-sky-700 z-10"
                     href={`mailto:${dept.Email}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                    }}
                   >
                     {dept.Email}
                   </a>
@@ -128,21 +121,24 @@ export default function Departments() {
               </p>
             </div>
             <MdOutlineClose
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 if (!isPasswordCorrect) {
-                  deleteDepartment(dept.ID);
-                } else {
+                  setSelectedDept(dept);
                   setOpen(true);
                   setPage("deleteDept");
+                } else {
+                  setOpen(true);
+                  setPage("ConfirmPass");
                 }
               }}
-              className="absolute text-teal-700 hover:text-teal-500 right-4 top-4 w-6 h-6"
+              className="absolute z-10 text-teal-700 hover:text-teal-500 right-4 top-4 w-6 h-6"
             />
           </li>
         ))}
       </ul>
       <PopUp open={open} setOpen={setOpen}>
-        {page === "deleteDept" && (
+        {page === "ConfirmPass" && (
           <PasswordConfirmation
             setOpen={setOpen}
             Email={myEmail}
@@ -153,6 +149,25 @@ export default function Departments() {
         )}
         {page === "addDept" && (
           <AddDept setOpen={setOpen} getDepartments={getDepartments} />
+        )}
+        {page === "updateDept" && (
+          <UpdateDept
+            setOpen={setOpen}
+            setPassword={setPassword}
+            getDepartments={getDepartments}
+            selectedDept={selectedDept}
+            setIsPasswordCorrect={setIsPasswordCorrect}
+          />
+        )}
+
+        {page === "deleteDept" && (
+          <DeleteDept
+            setOpen={setOpen}
+            setPassword={setPassword}
+            getDepartments={getDepartments}
+            selectedDept={selectedDept}
+            setIsPasswordCorrect={setIsPasswordCorrect}
+          />
         )}
       </PopUp>
     </>
