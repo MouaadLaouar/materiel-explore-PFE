@@ -1,8 +1,8 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Logo.png";
-import user from "../../assets/user.svg";
+// import user from "../../assets/user.svg";
 import fetchUserDataIfLoggedIn from "../../Utils/Fetch/fetchUserDataIfLoggedIn";
 import SignOut from "../../Utils/Authentification/signOut";
 import { useNavigate } from "react-router";
@@ -21,6 +21,7 @@ export default function NavBar() {
 
   const [isLoggedIn, setIsLoggedIn] = useAtom(userIdAtom);
   const navigate = useNavigate();
+  const [user, setUser] = useState({});
 
   const checkUser = async () => {
     const ID = localStorage.getItem("userID");
@@ -28,8 +29,9 @@ export default function NavBar() {
       try {
         const data = await fetchUserDataIfLoggedIn(ID);
         setIsLoggedIn(data.ID);
+        setUser(data);
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }
     }
   };
@@ -37,8 +39,7 @@ export default function NavBar() {
   useEffect(() => {
     checkUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  }, [isLoggedIn]);
   return (
     <Disclosure as="nav">
       {({ open }) => (
@@ -99,14 +100,17 @@ export default function NavBar() {
                   {/* Profile dropdown */}
                   <Menu as="div" className="relative ml-3 ">
                     <div>
-                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                      <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-teal-300">
                         <span className="absolute -inset-1.5" />
                         <span className="sr-only">Open user menu</span>
-                        <img
-                          className="h-8 w-8 rounded-full"
-                          src={user}
-                          alt=""
-                        />
+
+                        <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-teal-600 rounded-full ">
+                          <span className="font-medium text-white ">
+                            {user.FirstName && user.LastName
+                              ? `${user.FirstName[0].toUpperCase()}${user.LastName[0].toUpperCase()}`
+                              : ""}
+                          </span>
+                        </div>
                       </Menu.Button>
                     </div>
                     <Transition
