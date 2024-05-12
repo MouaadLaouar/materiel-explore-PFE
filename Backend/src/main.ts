@@ -15,8 +15,8 @@ async function bootstrap() {
         }),
     );
 
-    await app.listen(PORT, '192.168.1.103', () => {
-        Logger.log(`Your NestJS app is live at http://0.0.0.0:${PORT} !`);
+    await app.listen(PORT, () => {
+        Logger.log(`Your NestJS app is live at http://localhost:${PORT} !`);
     });
 }
 bootstrap();
