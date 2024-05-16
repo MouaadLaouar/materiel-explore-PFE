@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { sideBarActivePageAtom } from "../../../atom";
 import Profile from "../../../Components/Profile";
+import Department from "./Components/Department";
 
 const Admin = () => {
   const [activePage] = useAtom(sideBarActivePageAtom);
@@ -12,7 +13,7 @@ const Admin = () => {
       case "Users":
         return <h1>Users</h1>;
       case "Department":
-        return <h1>Department</h1>;
+        return <Department/>;
       case "Materials":
         return <h1>Materials</h1>;
     }

@@ -64,6 +64,7 @@ const Users = () => {
       <h1 className="my-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Users
       </h1>
+      
       {/* Filter */}
       <div className="mt-4 mb-12 mx-auto w-2/3 flex gap-8 font-outfit">
         {/* Search By Name Filter */}
@@ -72,6 +73,8 @@ const Users = () => {
           value={searchFilter}
           onChange={handleSearchChange}
           placeholder="Filter by name..."
+          name="search-filter"
+          autoComplete="off"
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-teal-600 focus:border-teal-500 sm:text-sm"
         />
 

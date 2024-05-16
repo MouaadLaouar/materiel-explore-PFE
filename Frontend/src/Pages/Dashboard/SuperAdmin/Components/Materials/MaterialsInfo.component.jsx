@@ -110,7 +110,7 @@ const Materials = () => {
               </thead>
               <tbody className=" divide-y divide-gray-200">
                 {materials.map((material) => (
-                  <tr key={material.ID} className="hover:bg-gray-50">
+                  <tr key={material.ID} className="hover:bg-gray-100">
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
                       <img
                         onClick={() => {
