@@ -2,7 +2,6 @@ import { Fragment, useEffect, useState } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import logo from "../../assets/Logo.png";
-// import user from "../../assets/user.svg";
 import fetchUserDataIfLoggedIn from "../../Utils/Fetch/fetchUserDataIfLoggedIn";
 import SignOut from "../../Utils/Authentification/signOut";
 import { useNavigate } from "react-router";

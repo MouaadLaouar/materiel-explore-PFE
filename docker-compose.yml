@@ -1,0 +1,43 @@
+version: '3.6'
+services:
+  Frontend:
+    image: frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_AuthorizationToken=4ea49a63-5f58-40b1-bd60-f59d151836ca
+      - VITE_EMAILJS_PUBLIC_KEY=sHC9D13QfP5XU3Deb
+      - VITE_Based_Url=http://localhost:8080
+    depends_on:
+      - Backend
+    networks:
+      - elk
+
+  Backend:
+    image: backend
+    container_name: backend
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=postgresql://postgres:fahrenheit11@postgres:5432/postgres?schema=public
+      - AuthorizationToken=4ea49a63-5f58-40b1-bd60-f59d151836ca
+      - PORT=8080
+    networks:
+      - elk
+    depends_on:
+      - Postgres
+
+  Postgres:
+    image: postgres:latest
+    container_name: postgres
+    restart: always
+    ports:
+      - '5432:5432'
+    networks:
+      - elk
+    environment:
+      - POSTGRES_PASSWORD=fahrenheit11
+
+networks:
+  elk:
