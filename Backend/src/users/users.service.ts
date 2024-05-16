@@ -149,6 +149,17 @@ export class UsersService {
             where: {
                 ID: ID,
             },
+            select: {
+                ID: true,
+                FirstName: true,
+                LastName: true,
+                Email: true,
+                Phone: true,
+                Role: true,
+                CreatedAt: true,
+                Password: true,
+                Departement: true,
+            },
         });
 
         if (!user) {
