@@ -9,6 +9,7 @@ import FetchUserById from "../../../../../Utils/Fetch/FetchUserById";
 import AddMaterials from "./Components/AddMaterials";
 import DeleteMaterials from "./Components/DeleteMaterials/DeleteMaterials.component";
 import UpdateMaterials from "./Components/UpdateMaterials/UpdateMaterials.component";
+import ShowMaterialPicture from "./Components/ShowMaterialPicture";
 
 const Materials = () => {
   const [materials, setMaterials] = useState([]);
@@ -43,8 +44,6 @@ const Materials = () => {
       console.error(error);
     }
   };
-
-  // console.log(materials)
 
   useEffect(() => {
     GetMaterials();
@@ -114,6 +113,11 @@ const Materials = () => {
                   <tr key={material.ID} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
                       <img
+                        onClick={() => {
+                          setOpen(true);
+                          setPage("showPicture");
+                          setSelectedMaterial(material);
+                        }}
                         loading="lazy"
                         className="rounded h-12 bg-cover"
                         src={`${Constants.BasedPictureUrl}/${material.Picture[0].Name}`}
@@ -174,13 +178,19 @@ const Materials = () => {
           <PasswordConfirmation
             setOpen={setOpen}
             Email={myEmail}
-            setIsPasswordCorrect={setIsPasswordCorrect}
             password={password}
             setPassword={setPassword}
+            setIsPasswordCorrect={setIsPasswordCorrect}
           />
         )}
         {page === "addMaterials" && (
           <AddMaterials setOpen={setOpen} GetMaterials={GetMaterials} />
+        )}
+        {page === "showPicture" && (
+          <ShowMaterialPicture
+            setOpen={setOpen}
+            selectedMaterial={selectedMaterial}
+          />
         )}
         {page === "updateMaterial" && (
           <UpdateMaterials
