@@ -3,10 +3,11 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from 'src/Guards/auth.guard';
 import { AuthSignInDto } from './dto/create.auth.dto';
 import { CreateUserDto } from 'src/users/dto/create.user.dto';
-import { ThrottlerModule } from '@nestjs/throttler';
+// import { ThrottlerModule } from '@nestjs/throttler';
 
 @Controller('auth')
-@UseGuards(AuthGuard, ThrottlerModule)
+// @UseGuards(AuthGuard, ThrottlerModule)
+@UseGuards(AuthGuard)
 export class AuthController {
     constructor(private authService: AuthService) {}
 
