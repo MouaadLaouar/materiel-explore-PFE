@@ -5,7 +5,8 @@ import { UsersModule } from './users/users.module';
 import { MaterialModule } from './material/material.module';
 import { DepartementModule } from './departement/departement.module';
 import PictureController from './picture/picture.controller';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
     imports: [
@@ -22,6 +23,11 @@ import { ThrottlerModule } from '@nestjs/throttler';
         ]),
     ],
     controllers: [PictureController],
-    providers: [],
+    providers: [
+        {
+            provide: APP_GUARD,
+            useClass: ThrottlerGuard,
+        },
+    ],
 })
 export class AppModule {}
