@@ -4,11 +4,11 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { Constants } from "../../../../../Constants";
 import PasswordConfirmation from "../../../../../Components/PasswordConfirmation";
 import PopUp from "../../../../../Components/PopUp";
-import AddMaterials from "../../../SuperAdmin/Components/Materials/Components/AddMaterials";
 import ShowMaterialPicture from "../../../SuperAdmin/Components/Materials/Components/ShowMaterialPicture";
 import DeleteMaterials from "../../../SuperAdmin/Components/Materials/Components/DeleteMaterials/DeleteMaterials.component";
-import UpdateMaterials from "../../../SuperAdmin/Components/Materials/Components/UpdateMaterials/UpdateMaterials.component";
 import GetMaterialsByDeptId from "../../../../../Utils/Fetch/GetMaterialsByDeptId";
+import UpdateMyMaterial from "./Components/UpdateMaterial/UpdateMyMaterial.component";
+import AddMyMaterial from "./Components/AddMaterial/AddMyMaterial.component";
 
 const DeptMaterials = () => {
   const [materials, setMaterials] = useState([]);
@@ -21,14 +21,19 @@ const DeptMaterials = () => {
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState("");
 
-  console.log(admin.Departement);
+  // console.log(admin);
 
-  const GetMaterials = async () => {
+  const FetchAdminAndMaterials = async () => {
     try {
-        // Need To Fix
-      const response = await GetMaterialsByDeptId("clvwmfqen0000u3xgbqu2otvz");
+      const ID = localStorage.getItem("userID");
+      const responseOne = await FetchUserById(ID);
+      setAdmin(responseOne);
+
+      const responseTwo = await GetMaterialsByDeptId(
+        responseOne.Departement[0].ID
+      );
       setMaterials(
-        response.sort((a, b) => {
+        responseTwo.sort((a, b) => {
           return new Date(b.CreatedAt) - new Date(a.CreatedAt);
         })
       );
@@ -37,19 +42,8 @@ const DeptMaterials = () => {
     }
   };
 
-  const getActualUserData = async () => {
-    try {
-      const ID = localStorage.getItem("userID");
-      const response = await FetchUserById(ID);
-      setAdmin(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   useEffect(() => {
-    getActualUserData();
-    GetMaterials();
+    FetchAdminAndMaterials();
   }, []);
   return (
     <>
@@ -186,7 +180,11 @@ const DeptMaterials = () => {
           />
         )}
         {page === "addMaterials" && (
-          <AddMaterials setOpen={setOpen} GetMaterials={GetMaterials} />
+          <AddMyMaterial
+            setOpen={setOpen}
+            GetMaterials={FetchAdminAndMaterials}
+            MyDept={admin.Departement[0]}
+          />
         )}
         {page === "showPicture" && (
           <ShowMaterialPicture
@@ -195,10 +193,10 @@ const DeptMaterials = () => {
           />
         )}
         {page === "updateMaterial" && (
-          <UpdateMaterials
+          <UpdateMyMaterial
             setOpen={setOpen}
             setPassword={setPassword}
-            getMaterials={GetMaterials}
+            getMaterials={FetchAdminAndMaterials}
             selectedMaterial={selectedMaterial}
             setIsPasswordCorrect={setIsPasswordCorrect}
           />
@@ -208,7 +206,7 @@ const DeptMaterials = () => {
           <DeleteMaterials
             setOpen={setOpen}
             setPassword={setPassword}
-            getMaterials={GetMaterials}
+            getMaterials={FetchAdminAndMaterials}
             selectedMaterial={selectedMaterial}
             setIsPasswordCorrect={setIsPasswordCorrect}
           />
