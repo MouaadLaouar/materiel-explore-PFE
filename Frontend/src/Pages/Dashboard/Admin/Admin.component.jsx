@@ -2,6 +2,7 @@ import { useAtom } from "jotai";
 import { sideBarActivePageAtom } from "../../../atom";
 import Profile from "../../../Components/Profile";
 import Department from "./Components/Department";
+import DeptMaterials from "./Components/Materials/DeptMaterials.component";
 
 const Admin = () => {
   const [activePage] = useAtom(sideBarActivePageAtom);
@@ -15,7 +16,7 @@ const Admin = () => {
       case "Department":
         return <Department/>;
       case "Materials":
-        return <h1>Materials</h1>;
+        return <DeptMaterials/>;
     }
   };
   return <div className="w-full">{renderPage()}</div>;
