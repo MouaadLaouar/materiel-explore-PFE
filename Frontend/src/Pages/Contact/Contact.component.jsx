@@ -29,7 +29,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="bg-gradient-to-b from-teal-900 to-teal-600 h-96 w-full">
+    <div className="bg-gradient-to-b from-teal-900 to-teal-50/20 mb-[35rem] h-96 w-full">
       <div className="w-full flex items-center justify-center">
         <form
           ref={form}
