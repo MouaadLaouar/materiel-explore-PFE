@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import FetchMaterials from "../../Utils/Fetch/FetchMaterials";
 import { Constants } from "../../Constants";
 import useFilterMaterials from "../../Hooks/useFilterMaterials";
+import { Link } from "react-router-dom";
 
 const Materials = () => {
   const [materials, setMaterials] = useState([]);
@@ -132,11 +133,12 @@ const Materials = () => {
                       {material.Description}
                     </p>
                   </div>
-                  {/* <div > */}
-                  <a className="absolute top-0 right-0 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-bl-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 ">
+                  <Link
+                    to={`${material.ID}`}
+                    className="absolute top-0 right-0 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-teal-700 rounded-bl-lg hover:bg-teal-800 focus:ring-4 focus:outline-none focus:ring-teal-300 "
+                  >
                     View Details
-                  </a>
-                  {/* </div> */}
+                  </Link>
                 </div>
               </div>
             </li>
