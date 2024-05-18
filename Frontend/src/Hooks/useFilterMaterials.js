@@ -7,17 +7,21 @@ const useFilterMaterials = (Materials, DeptFilter, TextFilter) => {
         // const isPredefinedRoleFilter =
         //     RoleFilter === "USER" || RoleFilter === "ADMIN";
 
-        // const filteredByRole = Materials.filter(item => {
-        //     if (isPredefinedRoleFilter) {
-        //         return item.Role === RoleFilter;
-        //     } else if (RoleFilter === "") {
-        //         return item;
-        //     } else {
-        //         return true;
-        //     }
-        // });
-
-        const filteredMaterials = Materials.filter(item => {
+        const filteredByDept = Materials.filter(item => {
+            if (DeptFilter !== "") {
+                console.log("A")
+                return item.DepartementId === DeptFilter;
+            } else if (DeptFilter === "") {
+                console.log("B")
+                return item;
+            } else {
+                console.log("C")
+                return true;
+            }
+        });
+        
+        const filteredMaterials = filteredByDept.filter(item => {
+            console.log("D")
             return (
                 item.Name.toLowerCase().includes(TextFilter.toLowerCase())
 

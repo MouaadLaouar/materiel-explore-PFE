@@ -3,27 +3,9 @@ import toast from "react-hot-toast";
 import { useParams } from "react-router";
 import FetchMaterialByID from "../../Utils/Fetch/FetchMaterialByID";
 import { Constants } from "../../Constants";
+import Loader from "../../Components/Loader/Loader.component";
 
 const MaterialDetails = () => {
-  const features = [
-    { name: "Origin", description: "Designed by Good Goods, Inc." },
-    {
-      name: "Material",
-      description:
-        "Solid walnut base with rare earth magnets and powder coated steel card cover",
-    },
-    // { name: "Dimensions", description: '6.25" x 3.55" x 1.15"' },
-    // {
-    //   name: "Finish",
-    //   description: "Hand sanded and finished with natural oil",
-    // },
-    // { name: "Includes", description: "Wood card tray and 3 refill packs" },
-    // {
-    //   name: "Considerations",
-    //   description:
-    //     "Made from natural materials. Grain and color vary with each item.",
-    // },
-  ];
   const currentMaterialID = useParams();
   const [material, setMaterial] = useState({});
 
@@ -31,7 +13,7 @@ const MaterialDetails = () => {
     try {
       const response = await FetchMaterialByID(currentMaterialID.MaterialID);
       setMaterial(response);
-      //   console.log(response);
+      console.log(response);
     } catch (error) {
       console.error(error);
       toast.error(error.message);
@@ -55,19 +37,33 @@ const MaterialDetails = () => {
               <p className="mt-4 text-gray-500">{material.Description}</p>
 
               <dl className="mt-16 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 sm:gap-y-16 lg:gap-x-8">
-                {features.map((feature) => (
-                  <div
-                    key={feature.name}
-                    className="border-t border-gray-200 pt-4"
-                  >
-                    <dt className="font-medium text-gray-900">
-                      {feature.name}
-                    </dt>
-                    <dd className="mt-2 text-sm text-gray-500">
-                      {feature.description}
-                    </dd>
-                  </div>
-                ))}
+                <div className="border-t border-gray-200 pt-4">
+                  <dt className="font-medium text-lg text-gray-900">State</dt>
+                  <dd className="mt-2 text-base text-gray-600">Excellent</dd>
+                </div>
+                <div className="border-t border-gray-200 pt-4">
+                  <dt className="font-medium text-lg text-gray-900">
+                    Department
+                  </dt>
+                  <dd className="mt-2 text-base text-gray-600">
+                    {material.Departement.Name}
+                  </dd>
+                </div>
+
+                <div className="border-t border-gray-200 pt-4">
+                  <dt className="font-medium text-lg text-gray-900">Contact</dt>
+                  <dd className="mt-2 text-base text-gray-600">
+                    {material.Departement.Phone}
+                  </dd>
+                </div>
+                <div className="border-t border-gray-200 pt-4">
+                  <dt className="font-medium text-lg text-gray-900">
+                    Email
+                  </dt>
+                  <dd className="mt-2 text-base text-gray-600">
+                    {material.Departement.Email}
+                  </dd>
+                </div>
               </dl>
             </div>
             <div className="w-full">
@@ -83,23 +79,7 @@ const MaterialDetails = () => {
     );
   }
 
-  return (
-    <>
-      {/* <div className="w-full text-center my-[10rem]">
-        <h1 className="text-3xl font-bold">Material Not Found</h1>
-      </div> */}
-      <div className="animate-pulse flex flex-col text-center mt-[8rem] mb-[20rem] items-center gap-4 w-80 mx-auto">
-        <div>
-          <div className="w-48 h-6 bg-slate-400 rounded-md"></div>
-          <div className="w-28 h-4 bg-slate-400 mx-auto mt-3 rounded-md"></div>
-        </div>
-        <div className="h-7 bg-slate-400 w-full rounded-md"></div>
-        <div className="h-7 bg-slate-400 w-full rounded-md"></div>
-        <div className="h-7 bg-slate-400 w-full rounded-md"></div>
-        <div className="h-7 bg-slate-400 w-1/2 rounded-md"></div>
-      </div>
-    </>
-  );
+  return <Loader />;
 };
 
 export default MaterialDetails;
