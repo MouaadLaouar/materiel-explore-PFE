@@ -67,6 +67,7 @@ export class MaterialService {
                 },
                 include: {
                     Picture: true,
+                    Departement: true,
                 },
             });
         } catch (error) {
