@@ -2,6 +2,7 @@ import { CgProfile } from "react-icons/cg";
 import { FaUsers } from "react-icons/fa6";
 import { FaBuilding } from "react-icons/fa";
 import { GiMaterialsScience } from "react-icons/gi";
+import { IoLibrary } from "react-icons/io5";
 
 
 export const AdminPages = [
@@ -9,6 +10,7 @@ export const AdminPages = [
   { name: "Users", href: "#", icon: FaUsers, isActive: false },
   { name: "Department", href: "#", icon: FaBuilding, isActive: false },
   { name: "Materials", href: "#", icon: GiMaterialsScience, isActive: false },
+  { name: "Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 export const SuperAdminPages = [
@@ -16,12 +18,12 @@ export const SuperAdminPages = [
   { name: "All Users", href: "#", icon: FaUsers, isActive: false },
   { name: "Departments", href: "#", icon: FaBuilding, isActive: false },
   { name: "Materials", href: "#", icon: GiMaterialsScience, isActive: false },
+  { name: "Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 export const UserPages = [
   { name: "Profile", href: "#", icon: CgProfile, isActive: true, },
-  // { name: "Departments", href: "#", icon: FaBuilding, isActive: false },
-  { name: "Borrowed Materials", href: "#", icon: GiMaterialsScience, isActive: false },
+  { name: "My Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 
