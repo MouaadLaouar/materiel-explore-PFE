@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useAtom, useSetAtom } from "jotai";
 import { AdminPages, SuperAdminPages, UserPages } from "./SideBar.Helper";
 import { useEffect, useState } from "react";
@@ -7,7 +8,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const Sidebar = () => {
+const Sidebar = ({ showSidebar }) => {
   const [userViewPerRole, setUserViewPerRole] = useState([]);
   const userRole = useAtom(userRoleAtom);
   const setSideBarActivePage = useSetAtom(sideBarActivePageAtom);
@@ -27,7 +28,13 @@ const Sidebar = () => {
   }, []);
   return (
     <>
-      <div className="min-w-52 min-h-screen hidden sm:block  [box-shadow:0_3px_5px_rgba(117,_117,_117,_0.3)]">
+      <div
+        className={classNames(
+          showSidebar ? "block" : "hidden",
+          "min-w-52 relative min-h-screen transition-transform ease-in-out [box-shadow:0_3px_5px_rgba(117,_117,_117,_0.3)]"
+        )}
+      >
+
         <ul className="p-7 pt-16 font-mdMed">
           {userViewPerRole.map((item) => (
             <li

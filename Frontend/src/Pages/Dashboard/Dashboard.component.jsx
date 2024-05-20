@@ -8,6 +8,7 @@ import { userIdAtom, userRoleAtom } from "../../atom";
 import SuperAdmin from "./SuperAdmin";
 import { useNavigate } from "react-router";
 import Sidebar from "../../Components/Sidebar/Sidebar.component";
+import { FaBars } from "react-icons/fa6";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Dashboard = () => {
   const [user, setUser] = useState(null);
   const [isLoggedIn] = useAtom(userIdAtom);
   const setUserRole = useSetAtom(userRoleAtom);
+  const [showSidebar, setShowSidebar] = useState(true);
 
   useEffect(() => {
     const checkUser = async () => {
@@ -59,6 +61,10 @@ const Dashboard = () => {
     return (
       <div className="flex">
         <Sidebar />
+        <FaBars
+          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          onClick={() => setShowSidebar(!showSidebar)}
+        />
         <Admin />
       </div>
     );
@@ -67,6 +73,10 @@ const Dashboard = () => {
     return (
       <div className="flex">
         <Sidebar />
+        <FaBars
+          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          onClick={() => setShowSidebar(!showSidebar)}
+        />
         <User />
       </div>
     );
@@ -74,7 +84,11 @@ const Dashboard = () => {
     setUserRole("SUPERADMIN");
     return (
       <div className="flex">
-        <Sidebar />
+        <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+        <FaBars
+          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          onClick={() => setShowSidebar(!showSidebar)}
+        />
         <SuperAdmin />
       </div>
     );
