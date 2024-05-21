@@ -90,6 +90,7 @@ export class MaterialService {
                     Departement: {
                         connect: { ID: Data.Departement },
                     },
+                    Status: Data.Status,
                 },
             });
         } catch (error) {

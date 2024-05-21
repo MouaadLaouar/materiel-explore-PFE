@@ -1,4 +1,5 @@
-import { IsString, IsNotEmpty } from "class-validator";
+import { Status } from "@prisma/client";
+import { IsString, IsNotEmpty, IsEnum } from "class-validator";
 
 export class MaterialDto {
     @IsString()
@@ -17,5 +18,9 @@ export class MaterialDto {
 export class UpdateMaterialDto extends MaterialDto {
     @IsString()
     @IsNotEmpty()
-    Id: string
+    Id: string;
+
+    @IsEnum(Status)
+    @IsNotEmpty()
+    Status: Status;
 }
