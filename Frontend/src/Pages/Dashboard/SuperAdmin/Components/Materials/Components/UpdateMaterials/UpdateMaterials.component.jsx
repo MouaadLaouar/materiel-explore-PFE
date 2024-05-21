@@ -20,8 +20,10 @@ const UpdateMaterials = ({
     Name: selectedMaterial.Name,
     Description: selectedMaterial.Description,
     Departement: selectedMaterial.DepartementId,
+    Status: selectedMaterial.Status,
   });
 
+  console.log(material);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,7 +104,7 @@ const UpdateMaterials = ({
               className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900"
             >
               Material Name
-            </label>
+            </label> 
           </div>
           <div className="mt-2">
             <input
@@ -137,6 +139,31 @@ const UpdateMaterials = ({
               className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
+          <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
+        </div>
+
+        {/* Status */}
+        <div className="my-5">
+          <div className="flex items-center justify-between">
+            <label className=" w-10/12 m-auto block text-sm font-medium leading-6 text-gray-900">
+              Status
+            </label>
+          </div>
+          <div className="mt-2">
+            <select
+              name="Status"
+              value={material.Status}
+              onChange={handleInputChange}
+              className="block w-10/12 m-auto rounded-md border-0 px-2 font-outfit py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            >
+              <option value="Available">Available</option>
+              <option value="NotAvailable">NotAvailable</option>
+              <option value="UnderRepair">Under Repair</option>
+              <option value="ComingSoon">Coming Soon</option>
+              <option value="OutOfService">Out Of Service</option>
+            </select>
+          </div>
+
           <span className="block text-sm font-medium leading-6 text-red-600 text-center mt-3"></span>
         </div>
 
