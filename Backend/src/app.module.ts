@@ -8,6 +8,7 @@ import PictureController from './picture/picture.controller';
 // import { ThrottlerModule } from '@nestjs/throttler';
 // import { ThrottlerGuard } from '@nestjs/throttler';
 // import { APP_GUARD } from '@nestjs/core';
+import { BorrowMaterialModule } from './borrow-material/borrow-material.module';
 
 @Module({
     imports: [
@@ -16,6 +17,7 @@ import PictureController from './picture/picture.controller';
         UsersModule,
         MaterialModule,
         DepartementModule,
+        BorrowMaterialModule,
         // ThrottlerModule.forRoot([
         //     {
         //         ttl: 60000,

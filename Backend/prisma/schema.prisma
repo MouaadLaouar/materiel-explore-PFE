@@ -26,6 +26,7 @@ model Material {
   Name        String
   Description String
   CreatedAt   DateTime    @default(now())
+  Status      Status      @default(Available)
   Departement Departement @relation(fields: [DepartementId], references: [ID])
 
   DepartementId String
@@ -69,4 +70,12 @@ enum Role {
   USER
   ADMIN
   SUPERADMIN
+}
+
+enum Status {
+  Available
+  NotAvailable
+  UnderRepair
+  ComingSoon
+  OutOfService
 }
