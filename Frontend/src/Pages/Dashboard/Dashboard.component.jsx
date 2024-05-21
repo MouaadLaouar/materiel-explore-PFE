@@ -60,7 +60,7 @@ const Dashboard = () => {
     setUserRole("ADMIN");
     return (
       <div className="flex">
-        <Sidebar />
+        <Sidebar showSidebar={showSidebar} />
         <FaBars
           className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}
@@ -72,7 +72,7 @@ const Dashboard = () => {
     setUserRole("USER");
     return (
       <div className="flex">
-        <Sidebar />
+        <Sidebar showSidebar={showSidebar} />
         <FaBars
           className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}
@@ -84,7 +84,7 @@ const Dashboard = () => {
     setUserRole("SUPERADMIN");
     return (
       <div className="flex">
-        <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
+        <Sidebar showSidebar={showSidebar} />
         <FaBars
           className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}

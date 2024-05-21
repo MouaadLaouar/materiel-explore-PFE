@@ -90,7 +90,7 @@ const Users = () => {
         </select>
       </div>
 
-      <div className="-my-2 overflow-x-auto ">
+      <div className="mb-16 overflow-x-auto ">
         <div className="inline-block min-w-full align-middle ">
           <div className="overflow-hidden  rounded-md shadow-sm">
             <table className="min-w-full font-outfit divide-y divide-gray-200">

@@ -63,7 +63,7 @@ export default function Departments() {
           &nbsp; Add Department
         </button>{" "}
       </div>
-      <ul role="list" className="divide-y divide-gray-200 ">
+      <ul role="list" className="divide-y mb-16 divide-gray-200 ">
         {departments.map((dept) => (
           <li
             onClick={() => {

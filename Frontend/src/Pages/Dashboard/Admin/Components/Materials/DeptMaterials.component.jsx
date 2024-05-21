@@ -165,6 +165,11 @@ const DeptMaterials = () => {
                 ))}
               </tbody>
             </table>
+            {materials.length === 0 && (
+              <h1 className="text-center font-mdBold text-3xl mt-12">
+                No Materials Found
+              </h1>
+            )}
           </div>
         </div>
       </div>
