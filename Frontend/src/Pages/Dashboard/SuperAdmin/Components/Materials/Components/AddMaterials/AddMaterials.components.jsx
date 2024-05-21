@@ -37,22 +37,25 @@ const AddMaterials = ({ setOpen, GetMaterials }) => {
 
   const handleFormSubmit = async (data) => {
     try {
-      const fileType = data.file[0].type;
-      console.log(fileType);
-      if (!validFileTypes.includes(fileType)) {
-        toast.error("File Type Is Not Supported");
+      const fileType = data.file[0];
+      if (fileType === undefined) {
+        toast.error("Please Select A File");
         return;
+      } else {
+        if (!validFileTypes.includes(fileType.type)) {
+          toast.error("File Type Is Not Supported");
+          return;
+        }
+        await CreateMaterial({
+          file: data.file[0],
+          Name: data.Name,
+          Description: data.Description,
+          Departement: data.Departement,
+        });
+        toast.success("Material Added Successfully");
+        GetMaterials();
+        setOpen(false);
       }
-      const res = await CreateMaterial({
-        file: data.file[0],
-        Name: data.Name,
-        Description: data.Description,
-        Departement: data.Departement,
-      });
-      console.log(res);
-      toast.success("Material Added Successfully");
-      GetMaterials();
-      setOpen(false);
     } catch (error) {
       console.error(error);
       toast.error(error);
