@@ -1,30 +1,19 @@
 import { useEffect, useState } from "react";
 
-const useFilterMaterials = (Materials, DeptFilter, TextFilter) => {
+const useFilterMaterials = (Materials, DeptFilter, TextFilter, StatusFilter) => {
     const [NewData, setNewData] = useState([]);
 
     useEffect(() => {
-        // const isPredefinedRoleFilter =
-        //     RoleFilter === "USER" || RoleFilter === "ADMIN";
+        const filteredMaterials = Materials.filter(item => {
+            const deptMatch = DeptFilter ? item.DepartementId === DeptFilter : true;
+            const statusMatch = StatusFilter ? item.Status === StatusFilter : true;
+            const textMatch = item.Name.toLowerCase().includes(TextFilter.toLowerCase());
 
-        const filteredByDept = Materials.filter(item => {
-            if (DeptFilter !== "") {
-                return item.DepartementId === DeptFilter;
-            } else if (DeptFilter === "") {
-                return item;
-            } else {
-                return true;
-            }
-        });
-
-        const filteredMaterials = filteredByDept.filter(item => {
-            return (
-                item.Name.toLowerCase().includes(TextFilter.toLowerCase())
-            );
+            return deptMatch && statusMatch && textMatch;
         });
 
         setNewData(filteredMaterials);
-    }, [DeptFilter, TextFilter, Materials]);
+    }, [DeptFilter, TextFilter, Materials, StatusFilter]);
 
     return NewData;
 };

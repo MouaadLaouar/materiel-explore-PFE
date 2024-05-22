@@ -6,11 +6,16 @@ import useFilterMaterials from "../../Hooks/useFilterMaterials";
 import Loader from "../../Components/Loader/Loader.component";
 import GetDept from "../../Utils/Fetch/GetDept";
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 const Materials = () => {
   const [materials, setMaterials] = useState([]);
   const [departments, setDepartments] = useState([]);
+
   const [searchFilter, setSearchFilter] = useState("");
   const [deptFilter, setDeptFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
 
   const GetMaterials = async () => {
     try {
@@ -40,13 +45,17 @@ const Materials = () => {
 
   const handleDeptChange = (e) => {
     setDeptFilter(e.target.value);
-    setSearchFilter("");
+  };
+
+  const handleStatusChange = (e) => {
+    setStatusFilter(e.target.value);
   };
 
   const FilteredMaterials = useFilterMaterials(
     materials,
     deptFilter,
-    searchFilter
+    searchFilter,
+    statusFilter
   );
 
   useEffect(() => {
@@ -56,9 +65,6 @@ const Materials = () => {
   }, []);
 
   if (materials.length !== 0) {
-    // if (FilteredMaterials.length === 0) {
-    //   return <h1>No Materials Found</h1>;
-    // }
     return (
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
@@ -93,10 +99,27 @@ const Materials = () => {
                   </option>
                 ))}
               </select>
+
+              <select
+                className=" w-full border rounded px-2 py-1 sm:mt-0 sm:w-60 mt-8 focus:outline-none focus:ring-teal-600 focus:border-teal-500 sm:text-sm"
+                value={statusFilter}
+                onChange={handleStatusChange}
+              >
+                <option value="">All Status</option>
+                <option value="Available">Available</option>
+                <option value="NotAvailable">NotAvailable</option>
+                <option value="UnderRepair">Under Repair</option>
+                <option value="ComingSoon">Coming Soon</option>
+                <option value="OutOfService">Out Of Service</option>
+              </select>
             </div>
           </div>
 
-          {FilteredMaterials.length === 0 && <h1 className="text-center font-mdBold text-3xl mb-[18rem]">No Materials Found</h1>}
+          {FilteredMaterials.length === 0 && (
+            <h1 className="text-center font-mdBold text-3xl mb-[18rem]">
+              No Materials Found
+            </h1>
+          )}
 
           {/* Materials Card */}
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -105,7 +128,7 @@ const Materials = () => {
                 <div className="max-w-full min-h-full bg-white border border-gray-200 rounded-lg shadow ">
                   <img
                     loading="lazy"
-                    className="rounded-t-lg max-h-[18rem] min-w-full"
+                    className="rounded-t-lg w-full h-60 object-cover"
                     src={`${Constants.BasedPictureUrl}/${material.Picture[0].Name}`}
                     alt=""
                   />
@@ -116,6 +139,19 @@ const Materials = () => {
                       </h5>
                       <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
                         {material.Description}
+                      </p>
+                      <p
+                        className={classNames(
+                          material.Status === "Available" && "text-emerald-500",
+                          material.Status === "NotAvailable" && "text-red-500",
+                          material.Status === "OutOfService" && "text-gray-500",
+                          material.Status === "UnderRepair" &&
+                            "text-yellow-500",
+                          material.Status === "ComingSoon" && "text-blue-500",
+                          "absolute top-0 left-0 inline-flex items-center px-3 py-2 text-sm font-medium text-center rounded-br-lg"
+                        )}
+                      >
+                        {material.Status.replace(/([A-Z])/g, " $1").trim()}
                       </p>
                     </div>
                     <Link
