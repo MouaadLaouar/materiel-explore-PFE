@@ -9,9 +9,7 @@ const User = () => {
     switch (activePage) {
       case "Profile":
         return <Profile />;
-      case "Departments":
-        return <h1>Departments</h1>;
-      case "Borrowed Materials":
+      case "My History":
         return <h1>Borrowed Materials</h1>;
     }
   };

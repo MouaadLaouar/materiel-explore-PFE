@@ -23,7 +23,7 @@ export const SuperAdminPages = [
 
 export const UserPages = [
   { name: "Profile", href: "#", icon: CgProfile, isActive: true, },
-  { name: "My Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
+  { name: "My History", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 

@@ -36,7 +36,7 @@ const Dashboard = () => {
   if (error) {
     return (
       <>
-        <div className="w-11/12 m-auto text-center mt-20">
+        <div className="w-11/12 m-auto text-center mt-20 mb-60">
           <h1 className="font-mdBold text-3xl mb-5">
             Oops ! , You are Not Logged In
           </h1>
