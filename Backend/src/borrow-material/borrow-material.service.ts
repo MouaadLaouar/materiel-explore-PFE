@@ -17,7 +17,12 @@ export class BorrowMaterialService {
                 },
                 Material: {
                     select: {
-                        Name: true
+                        Name: true,
+                        Departement: {
+                        select: {
+                            Name: true
+                        }
+                    }
                     }
                 }
             }
