@@ -1,2 +1,2 @@
-# materiel-explore-PFE
+# Materiel Explorer PFE
 
