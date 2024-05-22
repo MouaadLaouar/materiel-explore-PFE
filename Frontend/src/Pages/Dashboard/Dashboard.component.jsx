@@ -62,7 +62,7 @@ const Dashboard = () => {
       <div className="flex">
         <Sidebar showSidebar={showSidebar} />
         <FaBars
-          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          className="absolute text-2xl left-7 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}
         />
         <Admin />
@@ -74,7 +74,7 @@ const Dashboard = () => {
       <div className="flex">
         <Sidebar showSidebar={showSidebar} />
         <FaBars
-          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          className="absolute text-2xl left-7 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}
         />
         <User />
@@ -86,7 +86,7 @@ const Dashboard = () => {
       <div className="flex">
         <Sidebar showSidebar={showSidebar} />
         <FaBars
-          className="absolute text-2xl left-4 top-20 hover:cursor-pointer hover:text-teal-600"
+          className="absolute text-2xl left-7 top-20 hover:cursor-pointer hover:text-teal-600"
           onClick={() => setShowSidebar(!showSidebar)}
         />
         <SuperAdmin />
