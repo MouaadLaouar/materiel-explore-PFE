@@ -74,7 +74,7 @@ const Users = () => {
           onChange={handleSearchChange}
           placeholder="Filter by name..."
           name="search-filter"
-          autoComplete="off"
+          disabled={open}
           className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-teal-600 focus:border-teal-500 sm:text-sm"
         />
 

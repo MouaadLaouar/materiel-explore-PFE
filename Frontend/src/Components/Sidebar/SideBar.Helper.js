@@ -11,6 +11,7 @@ export const AdminPages = [
   { name: "Department", href: "#", icon: FaBuilding, isActive: false },
   { name: "Materials", href: "#", icon: GiMaterialsScience, isActive: false },
   { name: "Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
+  { name: "Demands", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 export const SuperAdminPages = [
@@ -19,6 +20,7 @@ export const SuperAdminPages = [
   { name: "Departments", href: "#", icon: FaBuilding, isActive: false },
   { name: "Materials", href: "#", icon: GiMaterialsScience, isActive: false },
   { name: "Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },
+  { name: "Demands", href: "#", icon: IoLibrary, isActive: false },
 ];
 
 export const UserPages = [
