@@ -13,17 +13,17 @@ export class BorrowMaterialController {
         return this.borrowMaterialService.GetAll();
     }
 
-    @Get(':userID')
+    @Get('user/:userID')
     getByUserID(@Param() param: any) {
         return this.borrowMaterialService.getByUserID(param.userID);
     }
 
-    @Get(':materialID')
+    @Get('material/:materialID')
     getByMaterialID(@Param() param: any) {
         return this.borrowMaterialService.getByMaterialID(param.materialID);
     }
 
-    @Get(':deptID')
+    @Get('dept/:deptID')
     GetByDeptID(@Param() param: any) {
         return this.borrowMaterialService.GetByDeptID(param.deptID);
     }
