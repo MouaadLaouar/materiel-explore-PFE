@@ -1,4 +1,39 @@
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import FetchAllBorrowedMaterials from "../../../../../Utils/Fetch/FetchAllBorrowedMaterials";
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
 const BorrowedMaterials = () => {
+  const [borrowedMaterials, setBorrowedMaterials] = useState([]);
+
+  const fetchBorrowedMaterials = async () => {
+    try {
+      const response = await FetchAllBorrowedMaterials();
+      setBorrowedMaterials(response);
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+      toast.error(error);
+    }
+  };
+
+  const formatDateString = (isoString) => {
+    const date = new Date(isoString);
+    return date.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  useEffect(() => {
+    fetchBorrowedMaterials();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <header>
@@ -14,12 +49,6 @@ const BorrowedMaterials = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Material Name
-                  </th>
-                  <th
-                    scope="col"
                     className="px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     User Name
@@ -28,13 +57,25 @@ const BorrowedMaterials = () => {
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Duration
+                    Material Name
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Reserved At
+                    Department
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Due Date
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Borrowed At
                   </th>
                   <th
                     scope="col"
@@ -42,40 +83,39 @@ const BorrowedMaterials = () => {
                   >
                     status
                   </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3  text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Edit
-                  </th>
                 </tr>
               </thead>
               <tbody className=" divide-y divide-gray-200 hover:bg-gray-100">
-                <tr>
-                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
-                    Microscope
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap tracking-wider text-left text-sm text-gray-600">
-                    Djoudi Islem
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
-                    1 Month
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
-                    20/05/2024
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm text-gray-600">
-                    Not returned
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    {/* <button
-                        className="text-teal-600 hover:text-teal-800 cursor-pointer outline-none"
-                      >
-                        Edit
-                      </button> */}
-                    Edit
-                  </td>
-                </tr>
+                {borrowedMaterials.map((borrowedMaterial) => (
+                  <tr key={borrowedMaterial.ID}>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
+                      {borrowedMaterial.User.FirstName}{" "}
+                      {borrowedMaterial.User.LastName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
+                      {borrowedMaterial.Material.Name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
+                      {borrowedMaterial.Material.Departement.Name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
+                      {formatDateString(borrowedMaterial.DueDate)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-left text-sm text-gray-600">
+                      {formatDateString(borrowedMaterial.CreatedAt)}
+                    </td>
+                    <td
+                      className={classNames(
+                        borrowedMaterial.Returned
+                          ? "text-emerald-500"
+                          : "text-red-500",
+                        "px-6 py-4 whitespace-nowrap text-right font-mdSemi text-sm"
+                      )}
+                    >
+                      {borrowedMaterial.Returned ? "Returned" : "Not Returned"}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
