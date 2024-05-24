@@ -42,6 +42,7 @@ model BorrowedMaterial {
   CreatedAt DateTime @default(now())
   Returned  Boolean  @default(false)
   DueDate   DateTime
+  BMStatus  BMStatus @default(NotConfirmed)
 
   userId     String
   MaterialId String
@@ -78,4 +79,10 @@ enum Status {
   UnderRepair
   ComingSoon
   OutOfService
+}
+
+enum BMStatus {
+  Confirmed
+  NotConfirmed
+  Cancelled
 }
