@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma.service';
-import { BorrowMaterialDto, UpdateBorrowedMaterialDto } from './dto/borrow-material.dto';
+import { BorrowMaterialDto, UpdateBorrowedMaterialDto, UpdateStatusDto } from './dto/borrow-material.dto';
 
 @Injectable()
 export class BorrowMaterialService {
@@ -8,6 +8,9 @@ export class BorrowMaterialService {
 
     async GetAll() {
         return await this.prisma.borrowedMaterial.findMany({
+            orderBy: {
+                CreatedAt: 'desc',
+            },
             include: {
                 User: {
                     select: {
@@ -34,6 +37,9 @@ export class BorrowMaterialService {
             where: {
                 userId: ID,
             },
+            orderBy: {
+                CreatedAt: 'desc',
+            },
             include: {
                 User: {
                     select: {
@@ -59,6 +65,9 @@ export class BorrowMaterialService {
         return await this.prisma.borrowedMaterial.findMany({
             where: {
                 MaterialId: ID,
+            },
+            orderBy: {
+                CreatedAt: 'desc',
             },
             include: {
                 User: {
@@ -130,6 +139,17 @@ export class BorrowMaterialService {
             data: {
                 Returned: data.Returned,
                 DueDate: data.DueDate,
+            },
+        });
+    }
+
+    async UpdateStatus(ID: string, data: UpdateStatusDto) {
+        return await this.prisma.borrowedMaterial.update({
+            where: {
+                ID: ID,
+            },
+            data: {
+                BMStatus: data.BMStatus,
             },
         });
     }

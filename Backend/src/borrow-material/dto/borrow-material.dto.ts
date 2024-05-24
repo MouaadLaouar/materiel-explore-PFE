@@ -1,4 +1,5 @@
-import { IsBoolean, IsNotEmpty, IsString } from "class-validator";
+import { BMStatus } from '@prisma/client';
+import { IsBoolean, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 
 export class BorrowMaterialDto {
     @IsNotEmpty()
@@ -12,7 +13,6 @@ export class BorrowMaterialDto {
     @IsNotEmpty()
     @IsString()
     DueDate: string;
-
 }
 
 export class UpdateBorrowedMaterialDto {
@@ -26,4 +26,10 @@ export class UpdateBorrowedMaterialDto {
     @IsNotEmpty()
     @IsString()
     DueDate: string;
+}
+
+export class UpdateStatusDto {
+    @IsEnum(BMStatus)
+    @IsNotEmpty()
+    BMStatus: BMStatus;
 }

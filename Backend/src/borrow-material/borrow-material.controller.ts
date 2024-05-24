@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, UseGuards, Body, Put, Delete } from '@nestjs/common';
 import { AuthGuard } from 'src/Guards/auth.guard';
 import { BorrowMaterialService } from './borrow-material.service';
-import { BorrowMaterialDto, UpdateBorrowedMaterialDto } from './dto/borrow-material.dto';
+import { BorrowMaterialDto, UpdateBorrowedMaterialDto, UpdateStatusDto } from './dto/borrow-material.dto';
 
 @Controller('borrow-material')
 @UseGuards(AuthGuard)
@@ -30,12 +30,17 @@ export class BorrowMaterialController {
 
     @Post('')
     AddBorrowedMaterial(@Body() data: BorrowMaterialDto) {
-        return this.borrowMaterialService.AddBorrowedMaterial(data)
+        return this.borrowMaterialService.AddBorrowedMaterial(data);
     }
- 
+
     @Put(':id')
     UpdateBorrowedMaterial(@Param() param: any, @Body() data: UpdateBorrowedMaterialDto) {
         return this.borrowMaterialService.UpdateBorrowedMaterial(param.id, data);
+    }
+
+    @Put('status/:id')
+    UpdateStatus(@Param() param: any, @Body() data: UpdateStatusDto) {
+        return this.borrowMaterialService.UpdateStatus(param.id, data);
     }
 
     @Delete(':id')
