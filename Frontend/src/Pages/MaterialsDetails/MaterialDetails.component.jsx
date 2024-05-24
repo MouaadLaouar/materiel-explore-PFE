@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 import { useParams } from "react-router";
 import FetchMaterialByID from "../../Utils/Fetch/FetchMaterialByID";
 import { Constants } from "../../Constants";
 import Loader from "../../Components/Loader/Loader.component";
+import PopUp from "../../Components/PopUp";
 import { useAtom } from "jotai";
 import { userIdAtom } from "../../atom";
 import fetchUserDataIfLoggedIn from "../../Utils/Fetch/fetchUserDataIfLoggedIn";
 import { Link } from "react-router-dom";
+import BorrowThisMaterial from "./BorrowThisMaterial";
+import formatDateString from "../../Utils/Other/FormatDate";
+import FetchBorrowedByMaterialID from "../../Utils/Fetch/FetchBorrowedByMaterialID";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -16,9 +19,11 @@ function classNames(...classes) {
 const MaterialDetails = () => {
   const { MaterialID } = useParams();
   const [material, setMaterial] = useState(null);
+  const [lastBM, setLastBM] = useState(null);
   const [error, setError] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoggedIn] = useAtom(userIdAtom);
+  const [open, setOpen] = useState(false);
 
   const fetchMaterial = async () => {
     try {
@@ -26,8 +31,6 @@ const MaterialDetails = () => {
       setMaterial(response);
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
-      setError(true);
     }
   };
 
@@ -41,10 +44,21 @@ const MaterialDetails = () => {
     }
   };
 
+  const fetchLastBorrowedMaterial = async () => {
+    try {
+      const response = await FetchBorrowedByMaterialID(MaterialID);
+      setLastBM(response[0]);
+      console.log(response[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     checkUser();
     fetchMaterial();
+    fetchLastBorrowedMaterial();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [MaterialID]);
 
@@ -120,11 +134,46 @@ const MaterialDetails = () => {
           {isLoggedIn && user && user.Role === "USER" && (
             <>
               {material.Status === "Available" && (
-                <div className="mt-10 h-20 text-center rounded-lg">
-                  <button className="inline-flex w-full items-center justify-center rounded-md bg-teal-600 px-10 py-2 text-lg font-semibold text-white shadow-sm hover:bg-teal-700 sm:w-auto">
-                    Borrow
-                  </button>
-                </div>
+                <>
+                  {lastBM !== undefined ? (
+                    <>
+                      {(lastBM?.BMStatus === "Confirmed" &&
+                        lastBM?.Returned === true) ||
+                        (lastBM?.BMStatus === "Cancelled" &&
+                        lastBM?.Returned === false ? (
+                          <div className="mt-10 h-20 text-center rounded-lg">
+                            <button
+                              onClick={() => setOpen(true)}
+                              className="inline-flex w-full items-center justify-center rounded-md bg-teal-600 px-10 py-2 text-lg font-semibold text-white shadow-sm hover:bg-teal-700 sm:w-auto"
+                            >
+                              Borrow
+                            </button>
+                          </div>
+                        ) : (
+                          <>
+                            <div className="mt-10 flex items-center justify-center text-center bg-blue-700 rounded-lg">
+                              <p className="p-4 text-lg font-mdSemi text-white">
+                                This Material Is Borrowed In The Moment , It
+                                Will Be Available Again At{" "}
+                                {formatDateString(lastBM?.DueDate)}
+                              </p>
+                            </div>
+                          </>
+                        ))}
+                    </>
+                  ) : (
+                    <>
+                      <div className="mt-10 h-20 text-center rounded-lg">
+                        <button
+                          onClick={() => setOpen(true)}
+                          className="inline-flex w-full items-center justify-center rounded-md bg-teal-600 px-10 py-2 text-lg font-semibold text-white shadow-sm hover:bg-teal-700 sm:w-auto"
+                        >
+                          Borrow
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </>
               )}
               {material.Status === "NotAvailable" && (
                 <div className="mt-10 flex items-center justify-center text-center bg-red-700 rounded-lg">
@@ -167,6 +216,14 @@ const MaterialDetails = () => {
           />
         </div>
       </div>
+      <PopUp open={open} setOpen={setOpen}>
+        <BorrowThisMaterial
+          setOpen={setOpen}
+          user={user}
+          material={material}
+          fetchLastBorrowedMaterial={fetchLastBorrowedMaterial}
+        />
+      </PopUp>
     </div>
   );
 };
