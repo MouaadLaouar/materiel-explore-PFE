@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
+import { useState } from "react";
 import useFilterBMByUser from "../../Hooks/useFilterBMByUser";
 import formatDateString from "../../Utils/Other/FormatDate";
+import PopUp from "../PopUp";
+import UpdateBMByUser from "../../Pages/Dashboard/User/Components/UpdateBMByUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const BMTable = ({ Filter }) => {
+  const [selectedBM, setSelectedBM] = useState({});
+  const [open, setOpen] = useState(false);
+
   const userID = localStorage.getItem("userID");
   const { currentMaterials, demands, history } = useFilterBMByUser(userID);
 
@@ -100,7 +106,17 @@ const BMTable = ({ Filter }) => {
                 </thead>
                 <tbody className="divide-y divide-gray-200">
                   {filteredData.map((borrowedMaterial) => (
-                    <tr key={borrowedMaterial.ID} className="hover:bg-gray-100">
+                    <tr
+                      key={borrowedMaterial.ID}
+                      className="hover:bg-gray-100"
+                      onClick={() => {
+                        if (Filter === "currentMaterials") {
+                          setSelectedBM(borrowedMaterial);
+                          setOpen(true);
+                          console.log("currentMaterials");
+                        }
+                      }}
+                    >
                       <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
                         {borrowedMaterial.User.FirstName}{" "}
                         {borrowedMaterial.User.LastName}
@@ -142,8 +158,8 @@ const BMTable = ({ Filter }) => {
                       >
                         {borrowedMaterial.BMStatus === "Confirmed"
                           ? borrowedMaterial.Returned
-                            ? "Returned"
-                            : "Not Returned"
+                            ? "Yes"
+                            : "No"
                           : "-"}
                       </td>
                     </tr>
@@ -154,6 +170,10 @@ const BMTable = ({ Filter }) => {
           </div>
         </div>
       </div>
+
+      <PopUp open={open} setOpen={setOpen}>
+        <UpdateBMByUser BM={selectedBM} setOpen={setOpen} />
+      </PopUp>
     </>
   );
 };
