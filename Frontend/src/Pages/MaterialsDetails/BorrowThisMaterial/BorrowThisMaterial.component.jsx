@@ -50,7 +50,7 @@ const BorrowThisMaterial = ({
       console.log(response);
       fetchLastBorrowedMaterial();
       setOpen(false);
-      toast("PLease Wait For An Approval From The Admin", {
+      toast("Please Wait For An Approval From The Admin", {
         duration: 6000,
       });
       toast.success("Your Demand Has Been Sent Successfully", {
