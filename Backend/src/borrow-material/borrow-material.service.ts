@@ -9,7 +9,7 @@ export class BorrowMaterialService {
     async GetAll() {
         return await this.prisma.borrowedMaterial.findMany({
             orderBy: {
-                CreatedAt: 'desc',
+                CreatedAt: 'asc',
             },
             include: {
                 User: {
@@ -38,7 +38,7 @@ export class BorrowMaterialService {
                 userId: ID,
             },
             orderBy: {
-                CreatedAt: 'desc',
+                CreatedAt: 'asc',
             },
             include: {
                 User: {
@@ -98,7 +98,7 @@ export class BorrowMaterialService {
                 },
             },
             orderBy: {
-                CreatedAt: 'desc',
+                CreatedAt: 'asc',
             },
             include: {
                 User: {
