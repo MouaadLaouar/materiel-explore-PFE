@@ -8,7 +8,6 @@ import { MdBorderColor, MdHistory } from "react-icons/md";
 
 export const AdminPages = [
   { name: "Profile", href: "#", icon: CgProfile, isActive: true },
-  { name: "Users", href: "#", icon: FaUsers, isActive: false },
   { name: "Department", href: "#", icon: FaBuilding, isActive: false },
   { name: "Materials", href: "#", icon: GiMaterialsScience, isActive: false },
   { name: "Borrowed Materials", href: "#", icon: IoLibrary, isActive: false },

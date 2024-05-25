@@ -92,6 +92,12 @@ const DeptMaterials = () => {
                   </th>
                   <th
                     scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                  <th
+                    scope="col"
                     className="px-6 py-3  text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Delete
@@ -123,6 +129,9 @@ const DeptMaterials = () => {
 
                     <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
                       {material.Name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap tracking-wider text-left text-sm text-gray-900">
+                      {material.Status}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap tracking-wider text-left text-sm text-gray-600">
                       {admin.Departement[0].Name}
