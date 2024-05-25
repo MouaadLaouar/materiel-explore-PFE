@@ -27,7 +27,7 @@ const useFilterBMByUser = (userID) => {
         }
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [demands, currentMaterials, history]);
 
     return {
         currentMaterials,
