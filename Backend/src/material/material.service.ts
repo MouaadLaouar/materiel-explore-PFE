@@ -141,42 +141,6 @@ export class MaterialService {
         }
     }
 
-    // async DeleteMaterial(Id: string) {
-    //     try {
-    //         const material = await this.prisma.material.findUnique({
-    //             where: {
-    //                 ID: Id,
-    //             },
-    //             include: {
-    //                 Picture: true,
-    //             },
-    //         });
-
-    //         if (material) {
-    //             if (material.Picture) {
-    //                 await this.prisma.picture.delete({
-    //                     where: {
-    //                         ID: material.Picture[0].ID,
-    //                     },
-    //                 });
-    //             }
-
-    //             return await this.prisma.material.delete({
-    //                 where: {
-    //                     ID: Id,
-    //                 },
-    //             });
-    //         } else {
-    //             throw new NotFoundException('Material not found');
-    //         }
-    //     } catch (error) {
-    //         throw new BadRequestException('Something bad happened', {
-    //             cause: new Error(error),
-    //             description: 'Some error description',
-    //         });
-    //     }
-    // }
-
     async GetByDeptId(Id: string) {
         try {
             return await this.prisma.material.findMany({

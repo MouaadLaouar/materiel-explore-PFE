@@ -49,7 +49,6 @@ export default function SignUp() {
         Role: "USER",
       });
       if (newUserData.ID) {
-        console.log(newUserData);
         const Id = newUserData.ID;
         setUserId(Id);
         localStorage.setItem("userID", Id);

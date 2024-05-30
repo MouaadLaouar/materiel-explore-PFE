@@ -30,7 +30,7 @@ export default function NavBar() {
         setIsLoggedIn(data.ID);
         setUser(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };

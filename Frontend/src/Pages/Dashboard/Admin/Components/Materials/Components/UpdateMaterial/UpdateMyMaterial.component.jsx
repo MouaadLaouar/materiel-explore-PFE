@@ -55,9 +55,8 @@ const UpdateMyMaterial = ({
     e.preventDefault();
     try {
       if (!isMaterialDataEmpty()) {
-        const res = await UpdateMaterial(material);
+        await UpdateMaterial(material);
         toast.success("Material Updated Successfully");
-        console.log(res);
         getMaterials();
         setOpen(false);
         setIsPasswordCorrect(true);

@@ -29,7 +29,6 @@ export class MaterialController {
         return this.materialService.GetAll();
     }
 
-    // FIXME: still working on this
     @Post('')
     @UseInterceptors(
         FileInterceptor('file', {
@@ -41,10 +40,7 @@ export class MaterialController {
         }),
     )
     CreateMaterial(@Body() Data: MaterialDto, @UploadedFile() file: Express.Multer.File) {
-        console.log('Data => ', Data);
-        console.log('File => ', file);
         return this.materialService.CreateMaterial(Data, file.filename);
-        // return 'OK';
     }
 
     @Get(':id')

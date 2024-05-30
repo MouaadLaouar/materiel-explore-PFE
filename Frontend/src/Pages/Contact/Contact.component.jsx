@@ -16,12 +16,11 @@ const Contact = () => {
       })
       .then(
         () => {
-          console.log("SUCCESS!");
           toast.success("Email Sent Successfully !");
           e.target.reset();
         },
         (error) => {
-          console.log("FAILED...", error.text);
+          console.error("FAILED...", error.text);
           toast.error("Something Went Wrong !");
           e.target.reset();
         }

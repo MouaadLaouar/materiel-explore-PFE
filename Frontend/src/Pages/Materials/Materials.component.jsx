@@ -144,7 +144,6 @@ const Materials = () => {
                 <div className="overflow-hidden rounded-t-lg">
                   <img
                     loading="lazy"
-                    // className="rounded-t-lg w-full h-60 object-cover"
                     className="rounded-t-lg w-full h-60 object-cover transform transition-transform duration-300 hover:scale-105"
                     src={`${Constants.BasedPictureUrl}/${material.Picture[0].Name}`}
                     alt=""

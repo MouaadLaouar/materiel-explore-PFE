@@ -7,8 +7,6 @@ export class AuthGuard implements CanActivate {
     constructor(private readonly configService: ConfigService) {}
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        // console.log(process.env.TOKEN);
-        // return true;
 
         const request = context.switchToHttp().getRequest();
 

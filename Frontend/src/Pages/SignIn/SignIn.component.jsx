@@ -35,7 +35,6 @@ export default function SignIn() {
     try {
       const userData = await signIn(data.email, data.password);
       if (userData.ID) {
-        console.log("Connected");
         const Id = userData.ID;
         setUserId(Id);
         localStorage.setItem("userID", Id);

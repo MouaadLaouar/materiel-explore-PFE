@@ -48,7 +48,6 @@ const MaterialDetails = () => {
     try {
       const response = await FetchBorrowedByMaterialID(MaterialID);
       setLastBM(response[0]);
-      console.log(response[0]);
     } catch (error) {
       console.error(error);
     }

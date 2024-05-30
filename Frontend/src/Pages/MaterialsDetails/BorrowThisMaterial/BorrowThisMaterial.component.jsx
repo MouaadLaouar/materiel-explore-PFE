@@ -46,8 +46,7 @@ const BorrowThisMaterial = ({
         ...formData,
         DueDate: new Date(formData.DueDate).toISOString(),
       };
-      const response = await CreateBorrowedMaterial(Data);
-      console.log(response);
+      await CreateBorrowedMaterial(Data);
       fetchLastBorrowedMaterial();
       setOpen(false);
       toast("Please Wait For An Approval From The Admin", {

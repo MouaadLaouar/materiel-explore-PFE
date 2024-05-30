@@ -4,15 +4,13 @@ import { MdOutlineUpdate } from "react-icons/md";
 import UpdateBorrowedMaterial from "../../../../../Utils/Update/UpdateBorrowedMaterial";
 
 const UpdateBMByUser = ({ setOpen, BM }) => {
-//   console.log(BM);
   const ReturnThisMaterial = async () => {
     try {
-      const res = await UpdateBorrowedMaterial({
+      await UpdateBorrowedMaterial({
         Id: BM.ID,
         Returned: true,
         DueDate: BM.DueDate,
       });
-      console.log(res);
       toast.success("Material Returned Successfully");
       setOpen(false);
     } catch (error) {

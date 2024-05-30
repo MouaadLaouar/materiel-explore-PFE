@@ -21,7 +21,6 @@ const DeptMaterials = () => {
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState("");
 
-  // console.log(admin);
 
   const FetchAdminAndMaterials = async () => {
     try {

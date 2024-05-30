@@ -113,7 +113,6 @@ export class UsersService {
     }
 
     async UpdateUser(Data: UpdateUserDto) {
-        // TODO: Need to be rethink
         const saltOrRounds = 10;
         const hashedPassword = await bcrypt.hash(Data.Password, saltOrRounds);
         try {

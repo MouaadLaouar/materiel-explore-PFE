@@ -2,15 +2,13 @@
 import FormatDateToYYYYMMDD from "../../../../../../Utils/Other/FormatDateToYYYYMMDD";
 import { FaUserPlus } from "react-icons/fa6";
 import { MdOutlineClose } from "react-icons/md";
-// import { useState } from "react";
 import toast from "react-hot-toast";
 import UpdateBMStatus from "../../../../../../Utils/Update/UpdateBMStatus";
 
 const Demands = ({ setOpen, BM }) => {
   const AcceptDemand = async () => {
     try {
-      const response = await UpdateBMStatus(BM.ID, { BMStatus: "Confirmed" });
-      console.log(response);
+      await UpdateBMStatus(BM.ID, { BMStatus: "Confirmed" });
       toast.success("Demand Accepted Successfully");
       setOpen(false);
     } catch (error) {
@@ -20,8 +18,7 @@ const Demands = ({ setOpen, BM }) => {
 
   const DeclineDemand = async () => {
     try {
-      const response = await UpdateBMStatus(BM.ID, { BMStatus: "Cancelled" });
-      console.log(response);
+      await UpdateBMStatus(BM.ID, { BMStatus: "Cancelled" });
       toast.success("Demand Declined");
       setOpen(false);
     } catch (error) {

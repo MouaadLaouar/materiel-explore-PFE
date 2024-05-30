@@ -23,7 +23,6 @@ const UpdateMaterials = ({
     Status: selectedMaterial.Status,
   });
 
-  console.log(material);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -56,9 +55,8 @@ const UpdateMaterials = ({
     e.preventDefault();
     try {
       if (!isMaterialDataEmpty()) {
-        const res = await UpdateMaterial(material);
+        await UpdateMaterial(material);
         toast.success("Material Updated Successfully");
-        console.log(res);
         getMaterials();
         setOpen(false);
         setIsPasswordCorrect(true);

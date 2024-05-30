@@ -53,9 +53,8 @@ const UpdateDept = ({
     e.preventDefault();
     try {
       if (!isUserDataEmpty()) {
-        const res = await UpdateDepartment(dept);
+        await UpdateDepartment(dept);
         toast.success("Department Updated Successfully");
-        console.log(res);
         getDepartments();
         setOpen(false);
         setIsPasswordCorrect(true);

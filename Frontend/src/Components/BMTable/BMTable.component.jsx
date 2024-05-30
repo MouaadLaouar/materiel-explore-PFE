@@ -113,7 +113,6 @@ const BMTable = ({ Filter }) => {
                         if (Filter === "currentMaterials") {
                           setSelectedBM(borrowedMaterial);
                           setOpen(true);
-                          console.log("currentMaterials");
                         }
                       }}
                     >

@@ -41,7 +41,7 @@ const Profile = () => {
           Role: data.Role,
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
   };
@@ -71,7 +71,6 @@ const Profile = () => {
         await UpdateUser({ ...userData, Password: password });
         toast.success("Profile Updated Successfully");
         setPassword("");
-        console.log(userData);
       } else {
         toast.error("Fill All The Fields");
         setIsPasswordCorrect(false);
@@ -146,7 +145,6 @@ const Profile = () => {
             </label>
             <div className="mt-2">
               <input
-                // required
                 id="LastName"
                 name="LastName"
                 type="text"

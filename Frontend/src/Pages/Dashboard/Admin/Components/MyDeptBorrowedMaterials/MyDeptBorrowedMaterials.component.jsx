@@ -169,7 +169,6 @@ const MyDeptBorrowedMaterials = () => {
                         if (radioValue === "demands") {
                           setSelectedBM(borrowedMaterial);
                           setOpen(true);
-                          console.log("demands");
                         }
                       }}
                     >
