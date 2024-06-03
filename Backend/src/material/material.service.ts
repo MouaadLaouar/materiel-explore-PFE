@@ -123,6 +123,13 @@ export class MaterialService {
                     // Delete the file from the upload folder
                     const filePath = join(process.cwd(), 'upload', material.Picture[0].Name);
                     unlinkSync(filePath);
+                    
+                    await this.prisma.borrowedMaterial.deleteMany({
+                        where: {
+                            MaterialId: material.ID,
+                        },
+                    });
+
                 }
 
                 return await this.prisma.material.delete({
