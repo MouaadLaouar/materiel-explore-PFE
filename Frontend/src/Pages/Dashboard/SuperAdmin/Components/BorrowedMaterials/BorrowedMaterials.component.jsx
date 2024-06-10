@@ -3,6 +3,7 @@ import useFilterBMBySuperAdmin from "../../../../../Hooks/useFilterBMBySuperAdmi
 import { useState } from "react";
 import PopUp from "../../../../../Components/PopUp";
 import Demands from "./Demands";
+import ReturnBM from "./ReturnBM/ReturnBM.component";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -13,7 +14,8 @@ const BorrowedMaterials = () => {
   const [open, setOpen] = useState(false);
   const [selectedBM, setSelectedBM] = useState({});
 
-  const { currentMaterials, demands, history } = useFilterBMBySuperAdmin();
+  const { currentMaterials, demands, history, refreshData } =
+    useFilterBMBySuperAdmin();
 
   const handleRadioChange = (event) => {
     setRadioValue(event.target.value);
@@ -94,6 +96,8 @@ const BorrowedMaterials = () => {
       <p className="text-sm mt-2 mb-8 font-mdReg text-sky-700 leading-4 tracking-tight sm:text-[1rem] text-center">
         {radioValue === "demands" &&
           "Click On The Demand To Approve It Or Decline It"}
+        {radioValue === "currentMaterials" &&
+          "Click On The Current Borrowed Material To Return It"}
       </p>
 
       <div className="mb-16 overflow-x-auto">
@@ -165,7 +169,7 @@ const BorrowedMaterials = () => {
                       key={borrowedMaterial.ID}
                       className="hover:bg-gray-100"
                       onClick={() => {
-                        if (radioValue === "demands") {
+                        if (radioValue !== "history") {
                           setSelectedBM(borrowedMaterial);
                           setOpen(true);
                         }
@@ -229,7 +233,20 @@ const BorrowedMaterials = () => {
       </div>
 
       <PopUp open={open} setOpen={setOpen}>
-        <Demands setOpen={setOpen} BM={selectedBM} />
+        {radioValue === "demands" && (
+          <Demands
+            setOpen={setOpen}
+            BM={selectedBM}
+            refreshData={refreshData}
+          />
+        )}
+        {radioValue === "currentMaterials" && (
+          <ReturnBM
+            setOpen={setOpen}
+            BM={selectedBM}
+            refreshData={refreshData}
+          />
+        )}
       </PopUp>
     </>
   );

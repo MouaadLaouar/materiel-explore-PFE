@@ -5,10 +5,11 @@ import { MdOutlineClose } from "react-icons/md";
 import toast from "react-hot-toast";
 import UpdateBMStatus from "../../../../../../Utils/Update/UpdateBMStatus";
 
-const Demands = ({ setOpen, BM }) => {
+const Demands = ({ setOpen, BM, refreshData }) => {
   const AcceptDemand = async () => {
     try {
       await UpdateBMStatus(BM.ID, { BMStatus: "Confirmed" });
+      refreshData();
       toast.success("Demand Accepted Successfully");
       setOpen(false);
     } catch (error) {
@@ -19,6 +20,7 @@ const Demands = ({ setOpen, BM }) => {
   const DeclineDemand = async () => {
     try {
       await UpdateBMStatus(BM.ID, { BMStatus: "Cancelled" });
+      refreshData();
       toast.success("Demand Declined");
       setOpen(false);
     } catch (error) {

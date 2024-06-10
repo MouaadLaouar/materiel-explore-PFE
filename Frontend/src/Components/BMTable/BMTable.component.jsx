@@ -1,17 +1,12 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react";
 import useFilterBMByUser from "../../Hooks/useFilterBMByUser";
 import formatDateString from "../../Utils/Other/FormatDate";
-import PopUp from "../PopUp";
-import UpdateBMByUser from "../../Pages/Dashboard/User/Components/UpdateBMByUser";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 const BMTable = ({ Filter }) => {
-  const [selectedBM, setSelectedBM] = useState({});
-  const [open, setOpen] = useState(false);
 
   const userID = localStorage.getItem("userID");
   const { currentMaterials, demands, history } = useFilterBMByUser(userID);
@@ -109,12 +104,6 @@ const BMTable = ({ Filter }) => {
                     <tr
                       key={borrowedMaterial.ID}
                       className="hover:bg-gray-100"
-                      onClick={() => {
-                        if (Filter === "currentMaterials") {
-                          setSelectedBM(borrowedMaterial);
-                          setOpen(true);
-                        }
-                      }}
                     >
                       <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium text-gray-900">
                         {borrowedMaterial.User.FirstName}{" "}
@@ -170,9 +159,6 @@ const BMTable = ({ Filter }) => {
         </div>
       </div>
 
-      <PopUp open={open} setOpen={setOpen}>
-        <UpdateBMByUser BM={selectedBM} setOpen={setOpen} />
-      </PopUp>
     </>
   );
 };
