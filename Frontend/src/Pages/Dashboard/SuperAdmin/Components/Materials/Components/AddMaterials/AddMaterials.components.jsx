@@ -38,14 +38,21 @@ const AddMaterials = ({ setOpen, GetMaterials }) => {
   const handleFormSubmit = async (data) => {
     try {
       const fileType = data.file[0];
+      const fileSize = data.file[0];
+
       if (fileType === undefined) {
-        toast.error("Please Select A File");
+        toast.error("Please Select a File");
         return;
       } else {
         if (!validFileTypes.includes(fileType.type)) {
           toast.error("File Type Is Not Supported");
           return;
         }
+        if (fileSize.size > 2000000) {
+          toast.error("File Size Is Too Big , Must be below 2MB");
+          return;
+        }
+
         await CreateMaterial({
           file: data.file[0],
           Name: data.Name,
