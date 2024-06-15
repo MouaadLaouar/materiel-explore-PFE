@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 5555;
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    app.enableCors();
+    app.enableCors({ allowedHeaders: '*', origin: '*', methods: '*' });
 
     app.useGlobalPipes(
         new ValidationPipe({
